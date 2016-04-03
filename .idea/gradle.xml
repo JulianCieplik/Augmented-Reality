@@ -10,8 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/SimpleAR" />
             <option value="$PROJECT_DIR$/openCVLibrary310" />
-            <option value="$PROJECT_DIR$/openCVTutorial1CameraPreview" />
           </set>
         </option>
       </GradleProjectSettings>
