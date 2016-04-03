@@ -72,8 +72,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
-        if (mCalibrator==null)
-        mCalibrator=new CameraCalibrator(5,5,this);
+
     }
 
     @Override
@@ -114,6 +113,11 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
 
     public void onCameraViewStarted(int width, int height) {
+        if (mCalibrator==null)
+            mCalibrator=new CameraCalibrator(width,height,this);
+        if (CalibrationResult.tryLoad(this, mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients())) {
+            mCalibrator.setCalibrated();
+        }
     }
 
     public void toMain(View view) {
