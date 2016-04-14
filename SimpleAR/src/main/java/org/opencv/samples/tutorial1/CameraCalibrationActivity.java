@@ -20,6 +20,7 @@ import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,11 +31,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class CameraCalibrationActivity extends Activity implements CvCameraViewListener2, OnTouchListener {
     private static final String TAG = "OCVSample::Activity";
@@ -44,6 +48,7 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
     private OnCameraFrameRender mOnCameraFrameRender;
     private int mWidth;
     private int mHeight;
+
     static {
         if (!OpenCVLoader.initDebug()) {
             // Handle initialization error

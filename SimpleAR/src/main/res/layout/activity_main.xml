@@ -27,7 +27,7 @@
             android:layout_weight="0.07" />
 
         <Button
-            android:layout_width="351dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="StartCameraFeed"
             android:id="@+id/button"
@@ -37,7 +37,7 @@
             android:textColorLink="#43a9ce" />
 
         <Button
-            android:layout_width="359dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Config"
             android:id="@+id/button2"
@@ -47,7 +47,7 @@
             android:onClick="config" />
 
         <Button
-            android:layout_width="333dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Use Test Data"
             android:id="@+id/button3"
@@ -55,7 +55,7 @@
             android:textColorLink="#43a9ce" />
 
         <Button
-            android:layout_width="324dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="About"
             android:id="@+id/button5"

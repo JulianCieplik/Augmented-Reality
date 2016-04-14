@@ -63,6 +63,10 @@ public class CameraCalibrator {
         renderFrame(rgbaFrame);
     }
 
+    public void ResChanged(int width,int height){
+        mImageSize =  new Size(width,height);
+    }
+
     public void calibrate() {
         ArrayList<Mat> rvecs = new ArrayList<Mat>();
         ArrayList<Mat> tvecs = new ArrayList<Mat>();
