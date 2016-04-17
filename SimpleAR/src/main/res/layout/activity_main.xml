@@ -52,7 +52,8 @@
             android:text="Use Test Data"
             android:id="@+id/button3"
             android:layout_weight="0.07"
-            android:textColorLink="#43a9ce" />
+            android:textColorLink="#43a9ce"
+            android:onClick="useTestData" />
 
         <Button
             android:layout_width="match_parent"

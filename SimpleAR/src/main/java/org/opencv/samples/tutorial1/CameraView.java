@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Mikael on 2016-04-10.
  */
 public class CameraView extends JavaCameraView {
+    private static Size current;
     public CameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -24,9 +25,15 @@ public class CameraView extends JavaCameraView {
         disconnectCamera();
         mMaxHeight = resolution.height;
         mMaxWidth = resolution.width;
+        current = resolution;
         connectCamera(getWidth(), getHeight());
     }
-
+    void setResolution() {
+        disconnectCamera();
+        mMaxHeight = current.height;
+        mMaxWidth = current.width;
+        connectCamera(getWidth(), getHeight());
+    }
     public Size getResolution() {
         return mCamera.getParameters().getPreviewSize();
     }

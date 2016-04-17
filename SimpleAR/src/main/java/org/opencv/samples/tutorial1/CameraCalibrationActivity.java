@@ -43,7 +43,7 @@ import java.util.List;
 public class CameraCalibrationActivity extends Activity implements CvCameraViewListener2, OnTouchListener {
     private static final String TAG = "OCVSample::Activity";
 
-    private CameraBridgeViewBase mOpenCvCameraView;
+    private CameraView mOpenCvCameraView;
     private CameraCalibrator mCalibrator = Tutorial1Activity.mCalibrator;
     private OnCameraFrameRender mOnCameraFrameRender;
     private int mWidth;
@@ -85,9 +85,10 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
 
         setContentView(R.layout.camera_calibration_surface_view);
 
-        mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.camera_calibration_java_surface_view);
+        mOpenCvCameraView = (CameraView) findViewById(R.id.camera_calibration_java_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
+        mOpenCvCameraView.setResolution();
     }
 
     @Override

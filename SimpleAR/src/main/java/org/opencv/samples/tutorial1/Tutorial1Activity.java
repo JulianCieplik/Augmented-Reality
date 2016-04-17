@@ -122,7 +122,10 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
+        if (!mCalibrator.isCalibrated()) {
+            Intent intent = new Intent(this, CameraCalibrationActivity.class);
+            startActivity(intent);
+        }
         return false;
     }
 

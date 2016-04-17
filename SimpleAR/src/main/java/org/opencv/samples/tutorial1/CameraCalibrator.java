@@ -17,6 +17,7 @@ import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.hardware.Camera;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -68,10 +69,10 @@ public class CameraCalibrator {
     }
 
     public void calibrate() {
-        ArrayList<Mat> rvecs = new ArrayList<Mat>();
-        ArrayList<Mat> tvecs = new ArrayList<Mat>();
+        ArrayList<Mat> rvecs = new ArrayList<>();
+        ArrayList<Mat> tvecs = new ArrayList<>();
         Mat reprojectionErrors = new Mat();
-        ArrayList<Mat> objectPoints = new ArrayList<Mat>();
+        ArrayList<Mat> objectPoints = new ArrayList<>();
         objectPoints.add(Mat.zeros(mCornersSize, 1, CvType.CV_32FC3));
         calcBoardCornerPositions(objectPoints.get(0));
         for (int i = 1; i < mCornersBuffer.size(); i++) {
@@ -105,7 +106,7 @@ public class CameraCalibrator {
                 positions[(int) (i * mPatternSize.width * cn + j + 1)] =
                         i * (float) mSquareSize;
                 positions[(int) (i * mPatternSize.width * cn + j + 2)] = 0;
-            }
+        }
         }
         corners.create(mCornersSize, 1, CvType.CV_32FC3);
         corners.put(0, 0, positions);
@@ -142,7 +143,7 @@ public class CameraCalibrator {
             mPatternWasFound = Calib3d.findCirclesGrid(grayFrame, mPatternSize,
                     mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID);
         }else{
-            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_SYMMETRIC_GRID);
+            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_FAST_CHECK);
         }
     }
 
@@ -186,4 +187,5 @@ public class CameraCalibrator {
     public void setCalibrated() {
         mIsCalibrated = true;
     }
+
 }

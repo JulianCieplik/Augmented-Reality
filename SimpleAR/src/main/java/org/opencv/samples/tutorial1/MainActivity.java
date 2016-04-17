@@ -18,6 +18,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    public void useTestData(View view){
+        Intent intent = new Intent(this,TestData.class);
+        startActivity(intent);
+    }
+
     public void sendMessage(View view) {
         Intent intent = new Intent(this,Tutorial1Activity.class);
         startActivity(intent);
