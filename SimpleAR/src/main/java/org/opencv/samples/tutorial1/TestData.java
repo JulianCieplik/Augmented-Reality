@@ -17,13 +17,18 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
+import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestData extends Activity {
 
@@ -91,6 +96,27 @@ public class TestData extends Activity {
         Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(mDistortionCoefficients);
         //Assume UnDistorted
 
+        // 3D model
+        List<Point3> model = new ArrayList<Point3>();
+        model.add(new Point3(0,0,0));
+        model.add(new Point3(3,0,0));
+        model.add(new Point3(0,3,0));
+        model.add(new Point3(3,3,0));
+        model.add(new Point3(0,0,3));
+        model.add(new Point3(3,0,3));
+        model.add(new Point3(0, 3, 3));
+        model.add(new Point3(3, 3, 3));
+        MatOfPoint3f object = new MatOfPoint3f();
+        object.fromList(model);
+        //2D points
+        List<Point> imagePoints = new ArrayList<Point>();
+        imagePoints.add(new Point(0,0));
+        imagePoints.add(new Point(0,100));
+        imagePoints.add(new Point(100,100));
+        imagePoints.add(new Point(100,0));
+
+        //Image Is Turn by WarpProjective After findHomography
+
         // make a mat and draw something
         Mat m = Mat.zeros(645, 501, CvType.CV_8UC3);
         Mat gray = Mat.zeros(645, 501, CvType.CV_8UC1);
@@ -107,8 +133,25 @@ public class TestData extends Activity {
             Imgproc.putText(m, "Pattern Detected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
             //Now The Corners Of Figure is in mCorner
             Point[] points = mCorners.toArray();
-            over.copyTo(m.colRange((int) points[0].x, (int) points[0].x + 74).rowRange((int)points[0].y, (int)points[0].y + 67));
+            Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
+            MatOfPoint m1 = new MatOfPoint();
+            m1.fromArray(outerCorners);
+            List<MatOfPoint> contor = new ArrayList<>();
+            contor.add(m1);
+            MatOfPoint m2 = new MatOfPoint();
+            m2.fromList(imagePoints);
 
+            MatOfPoint2f ma1 = new MatOfPoint2f();
+            ma1.fromArray(outerCorners);
+            MatOfPoint2f ma2 = new MatOfPoint2f();
+            ma2.fromList(imagePoints);
+            Mat H = Calib3d.findHomography(ma2, ma1, 0, 8);
+            Mat overRot = Mat.zeros(645, 501, CvType.CV_8UC3);
+
+            Imgproc.warpPerspective(over,overRot,H,new Size(645, 501));
+            Core.addWeighted(m,0.8,overRot,1,0,m);
+            //overRot.copyTo(m.colRange((int) points[0].x, (int) points[0].x + 74).rowRange((int) points[0].y, (int) points[0].y + 67));
+            Imgproc.drawContours(m, contor, 0, new Scalar(100,100,50));
         }else{
             Imgproc.putText(m, "Pattern Undetected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
             over.copyTo(m.colRange(80, 80 + 74).rowRange(100, 100 + 67));
