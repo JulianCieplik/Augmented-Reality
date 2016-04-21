@@ -25,6 +25,7 @@ import org.opencv.core.Size;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
+import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,14 +40,16 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.ListIterator;
 
 public class CameraCalibrationActivity extends Activity implements CvCameraViewListener2, OnTouchListener {
     private static final String TAG = "OCVSample::Activity";
-
+    private List<Camera.Size> mResolutionList;
     private CameraView mOpenCvCameraView;
     private CameraCalibrator mCalibrator = Tutorial1Activity.mCalibrator;
     private OnCameraFrameRender mOnCameraFrameRender;
     private int mWidth;
+    private boolean notDone=true;
     private int mHeight;
 
     static {
@@ -88,7 +91,6 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
         mOpenCvCameraView = (CameraView) findViewById(R.id.camera_calibration_java_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-        mOpenCvCameraView.setResolution();
     }
 
     @Override
@@ -122,6 +124,18 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.calibration, menu);
+        SubMenu mResolutionMenu = menu.addSubMenu("Resolution");
+        mResolutionMenu.setGroupCheckable(1,true,true);
+        mResolutionList = mOpenCvCameraView.getResolutionList();
+        MenuItem[] mResolutionMenuItems = new MenuItem[mResolutionList.size()];
+        ListIterator<Camera.Size> resolutionItr = mResolutionList.listIterator();
+        int idx = 0;
+        while (resolutionItr.hasNext()) {
+            Camera.Size element = resolutionItr.next();
+            mResolutionMenuItems[idx] = mResolutionMenu.add(1, idx, Menu.NONE,
+                    Integer.valueOf(element.width).toString() + "x" + Integer.valueOf(element.height).toString());
+            idx++;
+        }
 
         return true;
     }
@@ -138,6 +152,18 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String resultMessage =item.getGroupId()+"";
+        (Toast.makeText(CameraCalibrationActivity.this, resultMessage, Toast.LENGTH_LONG)).show();
+        if (item.getGroupId()==2) {
+            int id = item.getItemId();
+            Camera.Size resolution = mResolutionList.get(id);
+            mOpenCvCameraView.setResolution(resolution);
+            mCalibrator.ResChanged(resolution.width, resolution.height);
+            resolution = mOpenCvCameraView.getResolution();
+            String caption = Integer.valueOf(resolution.width).toString() + "x" + Integer.valueOf(resolution.height).toString();
+            Toast.makeText(this, caption, Toast.LENGTH_SHORT).show();
+            return true;
+        }
         switch (item.getItemId()) {
         case R.id.calibration:
             mOnCameraFrameRender =
@@ -157,9 +183,13 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
         case R.id.calibrate:
             final Resources res = getResources();
             if (mCalibrator.getCornersBufferSize() < 2) {
-                (Toast.makeText(this, res.getString(R.string.more_samples), Toast.LENGTH_SHORT)).show();
-                return true;
-            }
+            (Toast.makeText(this, res.getString(R.string.more_samples), Toast.LENGTH_SHORT)).show();
+            return true;
+        }
+
+
+
+
 
             mOnCameraFrameRender = new OnCameraFrameRender(new PreviewFrameRender());
             new AsyncTask<Void, Void, Void>() {
@@ -220,12 +250,17 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
     }
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
+
         return mOnCameraFrameRender.render(inputFrame);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.d(TAG, "onTouch invoked");
+        if (notDone)
+        {
+            mOpenCvCameraView.updateResolution();
+        }
         mCalibrator.addCorners();
         return false;
     }

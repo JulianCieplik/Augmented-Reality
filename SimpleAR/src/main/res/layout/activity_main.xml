@@ -22,7 +22,7 @@
             android:layout_width="266dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="SimpleAR "
             android:id="@+id/textView"
             android:layout_weight="0.07" />
 

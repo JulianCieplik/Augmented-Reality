@@ -13,10 +13,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Simple AR \n This is a OpenCV based AR application made by Mikael and Julian \n Only Simple insertation of 2-D image or primitive shape are supported"
+        android:id="@+id/textView2"
+        android:lines="4"
+        android:enabled="true"
+        android:height="100dp"
+        android:textColor="#80f0f0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/display1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true" />
 
     <TextView
@@ -37,4 +47,5 @@
         android:id="@+id/display3"
         android:layout_below="@+id/display2"
         android:layout_alignParentLeft="true" />
+
 </RelativeLayout>

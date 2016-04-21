@@ -143,7 +143,7 @@ public class CameraCalibrator {
             mPatternWasFound = Calib3d.findCirclesGrid(grayFrame, mPatternSize,
                     mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID);
         }else{
-            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_FAST_CHECK);
+            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_FILTER_QUADS);
         }
     }
 

@@ -118,11 +118,14 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+        mOpenCvCameraView.enableView();
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (!mCalibrator.isCalibrated()) {
+            mOpenCvCameraView.MdisconnectCamera();
+            mOpenCvCameraView.disableView();
             Intent intent = new Intent(this, CameraCalibrationActivity.class);
             startActivity(intent);
         }
@@ -136,8 +139,10 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     }
 
     public void onCameraViewStarted(int width, int height) {
-        if (mCalibrator == null)
+        if (mCalibrator == null) {
             mCalibrator = new CameraCalibrator(width, height, this);
+            mOpenCvCameraView.setResolution(mOpenCvCameraView.getResolution());
+        }
         if (CalibrationResult.tryLoad(this, mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients())) {
             mCalibrator.setCalibrated();
         }

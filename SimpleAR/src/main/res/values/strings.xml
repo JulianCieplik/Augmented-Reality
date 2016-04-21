@@ -70,5 +70,6 @@
     <string name="title_activity_settings">Config</string>
     <string name="title_activity_config">Config</string>
     <string name="title_activity_test_data">TestData</string>
+    <string name="testdata">TestDataSelection</string>
 
 </resources>

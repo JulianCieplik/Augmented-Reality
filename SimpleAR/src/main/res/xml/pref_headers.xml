@@ -10,7 +10,7 @@
     <header
         android:fragment="org.opencv.samples.tutorial1.ConfigActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/pref_header_notifications" />
+        android:title="@string/testdata" />
 
     <header
         android:fragment="org.opencv.samples.tutorial1.ConfigActivity$DataSyncPreferenceFragment"

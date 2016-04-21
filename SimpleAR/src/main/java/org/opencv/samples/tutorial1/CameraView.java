@@ -15,6 +15,7 @@ public class CameraView extends JavaCameraView {
     private static Size current;
     public CameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     public List<Size> getResolutionList() {
@@ -28,12 +29,18 @@ public class CameraView extends JavaCameraView {
         current = resolution;
         connectCamera(getWidth(), getHeight());
     }
-    void setResolution() {
+    public void updateResolution() {
         disconnectCamera();
         mMaxHeight = current.height;
         mMaxWidth = current.width;
-        connectCamera(getWidth(), getHeight());
+        connectCamera( mMaxWidth, mMaxHeight);
     }
+
+    public void MdisconnectCamera(){
+        //mCamera.unlock();
+        disconnectCamera();
+    }
+
     public Size getResolution() {
         return mCamera.getParameters().getPreviewSize();
     }
