@@ -28,7 +28,7 @@ public class CameraCalibrator {
     private static int mCornersSize = (int)(mPatternSize.width * mPatternSize.height);
     private int patternType;
     private boolean mPatternWasFound = false;
-    private MatOfPoint2f mCorners = new MatOfPoint2f();
+    public MatOfPoint2f mCorners = new MatOfPoint2f();
     private List<Mat> mCornersBuffer = new ArrayList<Mat>();
     private boolean mIsCalibrated = false;
 
@@ -138,10 +138,10 @@ public class CameraCalibrator {
         return Math.sqrt(totalError / totalPoints);
     }
 
-    private void findPattern(Mat grayFrame) {
+    public void findPattern(Mat grayFrame) {
         if (patternType==1) {
             mPatternWasFound = Calib3d.findCirclesGrid(grayFrame, mPatternSize,
-                    mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID);
+                    mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING);
         }else{
             mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_FILTER_QUADS);
         }
@@ -153,7 +153,19 @@ public class CameraCalibrator {
         }
     }
 
+    public boolean patternfound(){
+        return mPatternWasFound;
+    }
+    public Point[] getouterCorners(){
+        Point[] points = mCorners.toArray();
+        Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
+        Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
+        Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
+        return outerCorners;
+    }
+
     private void drawPoints(Mat rgbaFrame) {
+
         Calib3d.drawChessboardCorners(rgbaFrame, mPatternSize, mCorners, mPatternWasFound);
     }
 

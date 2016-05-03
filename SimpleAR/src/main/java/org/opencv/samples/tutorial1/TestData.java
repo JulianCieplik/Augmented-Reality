@@ -7,19 +7,18 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -30,14 +29,12 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import java.io.FileNotFoundException;
-import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestData extends Activity {
 
-    private static Size mPatternSize = new Size(4, 11);
+    private static Size mPatternSize = new Size(4, 11);;
     private static int mCornersSize = (int)(mPatternSize.width * mPatternSize.height);
     private MatOfPoint2f mCorners = new MatOfPoint2f();
     private MatOfDouble mCameraMatrix = new MatOfDouble();
@@ -95,15 +92,48 @@ public class TestData extends Activity {
     IV.setImageBitmap(bMap);*/
 
     public void ImageDrawTest() {
+        Resources res = getResources();
+        SharedPreferences mPrefs= PreferenceManager.getDefaultSharedPreferences(this);
+        int i = Integer.valueOf(mPrefs.getString("Timg", "2"));
+        Bitmap bMap = getTestImage(i,res);  // Image To Display
+        int height = bMap.getHeight();
+        int width = bMap.getWidth();
         // MakeCamera Image
-       int mFlags = Calib3d.CALIB_FIX_PRINCIPAL_POINT +
-                Calib3d.CALIB_ZERO_TANGENT_DIST +
-                Calib3d.CALIB_FIX_ASPECT_RATIO +
-                Calib3d.CALIB_FIX_K4 +
-                Calib3d.CALIB_FIX_K5;
         Mat.eye(3, 3, CvType.CV_64FC1).copyTo(mCameraMatrix);
         mCameraMatrix.put(0, 0, 1.0);
         Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(mDistortionCoefficients);
+        CameraCalibrator cal = new CameraCalibrator(width, height, this);
+        Log.i("hej:", "StartCalibrationLoad ");
+      double[] values= new double[]{699.2254638671875, 0, 358.5,
+        0, 699.2254638671875, 202,
+        0, 0, 1};
+        for (i=0;i<9;i++){
+            mCameraMatrix.put(i/3,i%3,values[i]);
+        }
+        int doWork = Integer.valueOf(mPrefs.getString("dWork", "0"));
+        if (doWork==1) {
+            if (!CalibrationResult.tryLoad(this, cal.getCameraMatrix(), cal.getDistortionCoefficients())) {
+                for (i = 2; i < 14; i++) {
+
+                    Bitmap bMapx = getTestImage(i, res);  // Image To Display
+                    // make a mat and draw something
+                    Mat m = Mat.zeros(bMapx.getWidth(),bMapx.getHeight(), CvType.CV_8UC3);
+                    Mat gray = Mat.zeros(bMapx.getWidth(),bMapx.getHeight(), CvType.CV_8UC1);
+                    Utils.bitmapToMat(bMapx, m);
+                    Imgproc.cvtColor(m, gray, Imgproc.COLOR_BGR2GRAY);
+                    cal.processFrame(gray, m);
+                    cal.addCorners();
+                }
+                cal.calibrate();
+                cal.getCameraMatrix().copyTo(mCameraMatrix);
+                cal.getDistortionCoefficients().copyTo(mDistortionCoefficients);
+                CalibrationResult.save(this, mCameraMatrix, mDistortionCoefficients);
+            } else {
+                cal.setCalibrated();
+                cal.getCameraMatrix().copyTo(mCameraMatrix);
+                cal.getDistortionCoefficients().copyTo(mDistortionCoefficients);
+            }
+        }
         //Assume UnDistorted
         // 3D model
         List<Point3> model = new ArrayList<Point3>();
@@ -112,93 +142,99 @@ public class TestData extends Activity {
         model.add(new Point3(0,3,0));
         model.add(new Point3(3,3,0));
         model.add(new Point3(3,0,0));
-        model.add(new Point3(0,1.5,0));
-        Cmodel.addAll(model);
-        Cmodel.add(new Point3(0, 0, 3));
-        Cmodel.add(new Point3(3, 0, 3));
-        Cmodel.add(new Point3(0, 3, 3));
-        Cmodel.add(new Point3(3, 3, 3));
+        Cmodel.addAll(model.subList(0,4));
+        Cmodel.add(new Point3(3, 0, 1));
+        Cmodel.add(new Point3(3, 3, 1));
+        Cmodel.add(new Point3(0, 3, 1));
+        Cmodel.add(new Point3(0, 0, 1));
         MatOfPoint3f object = new MatOfPoint3f();
         MatOfPoint3f Cobject = new MatOfPoint3f();
         object.fromList(model);
         Cobject.fromList(Cmodel);
-
+        Log.i("hej:", "ModelsDone");
 
         //Image Is Turn by WarpProjective After findHomography
-
-
-
-        Resources res = getResources();
-        SharedPreferences mPrefs= PreferenceManager.getDefaultSharedPreferences(this);
-        int i = Integer.valueOf(mPrefs.getString("Timg", "1"));
-        Bitmap bMap = getTestImage(i,res);  // Image To Display
-        int height = bMap.getHeight();
-        int width = bMap.getWidth();
+         i = Integer.valueOf(mPrefs.getString("Timg", "2"));
+        Bitmap xMap =getTestImage(0,res);  // OverLay 2-D Image
+        int heightx = xMap.getHeight();
+        int widthx = xMap.getWidth();
         // make a mat and draw something
         Mat m = Mat.zeros(width, height, CvType.CV_8UC3);
         Mat gray = Mat.zeros(width, height, CvType.CV_8UC1);
         Utils.bitmapToMat(bMap, m);
         Imgproc.cvtColor(m, gray, Imgproc.COLOR_BGR2GRAY);
         boolean contains = findPattern(gray);
-        Mat over = Mat.zeros(74, 67, CvType.CV_8UC3);
-        Bitmap xMap = BitmapFactory.decodeResource(res, R.drawable.overlay);  // OverLay 2-D Image
+        Mat over = Mat.zeros(widthx, heightx, CvType.CV_8UC3);
+
         Utils.bitmapToMat(xMap, over);
         if (contains) {
             Imgproc.putText(m, "Pattern Detected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
             //Now The Corners Of Figure is in mCorner
             Point[] points = mCorners.toArray();
-            Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width],null};
+            Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
             Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
             Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
-            outerCorners[4]=new Point(outerCorners[0].x+directionA.x*0.5,outerCorners[0].y+directionA.y*0.5);
+           // outerCorners[4]=new Point(outerCorners[0].x+directionA.x*0.5,outerCorners[0].y+directionA.y*0.5);
             //2D points
             List<Point> imagePoints = new ArrayList<Point>();
             imagePoints.add(new Point(0,0));
             imagePoints.add(new Point(0, 67));
             imagePoints.add(new Point(74, 67));
             imagePoints.add(new Point(74, 0));
-            imagePoints.add(new Point(0, 33.5));
             //
             MatOfPoint m1 = new MatOfPoint();
             m1.fromArray(outerCorners);
+            Log.i("hej:", "m1:"+m1.dump());
             List<MatOfPoint> contor = new ArrayList<>();
-            contor.add(m1);
-            MatOfPoint m2 = new MatOfPoint();
-
-            m2.fromList(imagePoints);
-
             MatOfPoint2f ma1 = new MatOfPoint2f();
             ma1.fromArray(outerCorners);
             MatOfPoint2f ma2 = new MatOfPoint2f();
             ma2.fromList(imagePoints);
+            contor.add(m1);
             Mat H = Calib3d.findHomography(ma2, ma1, 0, 3);
+            if (i==2) {
+                double[] Troll = new double[]{-2.252397458004596, 0.7567594715236352, 418.1277336542512,
+                        0.8011375681858384, 0.8537940100559277, 64.07172258201339,
+                        -0.001520171284289029, -0.0007002159729610811, 1};
+                for (i = 0; i < 9; i++) {
+                    H.put(i / 3, i % 3, Troll[i]);
+                }
+            }
+            Log.i("hej:", "Homography:"+H.dump());
             String resultMessage =H.dump();
             (Toast.makeText(TestData.this, resultMessage, Toast.LENGTH_LONG)).show();
 
             Mat overRot = Mat.zeros(width,height,CvType.CV_8UC3);
             Imgproc.warpPerspective(over, overRot, H, new Size(width, height));
             Core.addWeighted(m, 0.8, overRot, 1, 0, m);
-            //overRot.copyTo(m.colRange((int) points[0].x, (int) points[0].x + 74).rowRange((int) points[0].y, (int) points[0].y + 67));
+            // Draw Solid Overlay overRot.copyTo(m.colRange((int) points[0].x, (int) points[0].x + 74).rowRange((int) points[0].y, (int) points[0].y + 67));
 
             Imgproc.drawContours(m, contor, 0, new Scalar(100, 100, 50));
-            //Do 3D work!
-            ArrayList<Mat> rvecs = new ArrayList<>();
-            ArrayList<Mat> tvecs = new ArrayList<>();
-            Mat rvec = new Mat();
-            Mat tvec = new Mat();
+            int eWork =   i = Integer.valueOf(mPrefs.getString("eWork", "0"));
+            if (eWork==1){
+                //Do 3D work!
+                ArrayList<Mat> rvecs = new ArrayList<>();
+                ArrayList<Mat> tvecs = new ArrayList<>();
+                Mat rvec = new Mat();
+                Mat tvec = new Mat();
 
-            Calib3d.solvePnP(object, ma1, mCameraMatrix, mDistortionCoefficients, rvec, tvec);
-            MatOfPoint2f respoints = new MatOfPoint2f();
-           // respoints.fromList(imagePoints);
-            MatOfPoint p = new MatOfPoint();
-            p.convertTo(p, CvType.CV_32S);
-           List<MatOfPoint> a = new ArrayList<>();
-            Calib3d.projectPoints(Cobject, rvec, tvec, mCameraMatrix, mDistortionCoefficients, respoints);
-            p.fromList(respoints.toList());
-            a.add(0, p);
-            Imgproc.fillPoly(m, a, new Scalar(100, 100, 50));
-            resultMessage =respoints.dump();
-            (Toast.makeText(TestData.this, resultMessage, Toast.LENGTH_LONG)).show();
+                Calib3d.solvePnP(object, ma1, mCameraMatrix, mDistortionCoefficients, rvec, tvec);
+                MatOfPoint2f respoints = new MatOfPoint2f();
+                // respoints.fromList(imagePoints);
+                MatOfPoint p = new MatOfPoint();
+                p.convertTo(p, CvType.CV_32S);
+                List<MatOfPoint> a = new ArrayList<>();
+                Calib3d.projectPoints(Cobject, rvec, tvec, mCameraMatrix, mDistortionCoefficients, respoints);
+                Log.i("hej:", "AtdrawingPhase" + respoints.dump());
+                p.fromList(respoints.toList());
+                a.add(0, p);
+                //p.fromList(respoints.toList().subList(5,9));
+                //a.add(1,p);
+                Imgproc.drawContours(m, a, 0, new Scalar(200, 50, 50), 10);
+                Log.i("hej:", "PolyDone ");
+                resultMessage = respoints.dump();
+                (Toast.makeText(TestData.this, resultMessage, Toast.LENGTH_LONG)).show();
+            }
         }else{
             Imgproc.putText(m, "Pattern Undetected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
             over.copyTo(m.colRange(80, 80 + 74).rowRange(100, 100 + 67));
@@ -222,11 +258,11 @@ public class TestData extends Activity {
             case 8:return BitmapFactory.decodeResource(res, R.drawable.i08);
             case 9:return BitmapFactory.decodeResource(res, R.drawable.i09);
             case 10:return BitmapFactory.decodeResource(res, R.drawable.i10);
-            case 11:return BitmapFactory.decodeResource(res, R.drawable.i11);
+            case 11:return BitmapFactory.decodeResource(res, R.drawable.i15);
             case 12:return BitmapFactory.decodeResource(res, R.drawable.i12);
             case 13:return BitmapFactory.decodeResource(res, R.drawable.i13);
             case 14:return BitmapFactory.decodeResource(res, R.drawable.i14);
-            case 15:return BitmapFactory.decodeResource(res, R.drawable.i15);
+            case 15:return BitmapFactory.decodeResource(res, R.drawable.i11);
         }
         return null;
     }

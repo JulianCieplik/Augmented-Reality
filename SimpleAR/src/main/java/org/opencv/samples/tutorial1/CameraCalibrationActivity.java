@@ -262,6 +262,9 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
             mOpenCvCameraView.updateResolution();
         }
         mCalibrator.addCorners();
+        if (mCalibrator.patternfound()){
+        mOpenCvCameraView.takePicture();
+        }
         return false;
     }
 }

@@ -4,11 +4,22 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
+import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -18,7 +29,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
@@ -31,6 +41,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -40,6 +51,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private boolean mIsJavaCamera = true;
     private MenuItem mItemSwitchCamera = null;
     public static CameraCalibrator mCalibrator;
+    private MyRender mOnCameraFrameRender;
     private List<Size> mResolutionList;
     private MenuItem[] mResolutionMenuItems;
     private SubMenu mResolutionMenu;
@@ -118,6 +130,11 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             Log.d(TAG, "OpenCV library found inside package. Using it!");
             mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
+        if (mCalibrator!=null && !mCalibrator.isCalibrated())
+        if ( CalibrationResult.tryLoad(this, mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients())) {
+            mCalibrator.setCalibrated();
+            mOnCameraFrameRender= new MyRender(mCalibrator,this);
+        }
         mOpenCvCameraView.enableView();
     }
 
@@ -142,9 +159,11 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         if (mCalibrator == null) {
             mCalibrator = new CameraCalibrator(width, height, this);
             mOpenCvCameraView.setResolution(mOpenCvCameraView.getResolution());
+            mOnCameraFrameRender=new MyRender(mCalibrator,this);
         }
         if (CalibrationResult.tryLoad(this, mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients())) {
             mCalibrator.setCalibrated();
+            mOnCameraFrameRender=new MyRender(mCalibrator,this);
         }
     }
 
@@ -198,13 +217,15 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat imageFrame = inputFrame.rgba();
         if (mCalibrator.isCalibrated()) {
-            Imgproc.putText(imageFrame, "Calibrated", new Point(50, 50),
-                    Core.FONT_HERSHEY_SIMPLEX, 1.0, new Scalar(255, 255, 0));
+           // Imgproc.putText(imageFrame, "Calibrated", new Point(50, 50),
+            //        Core.FONT_HERSHEY_SIMPLEX, 1.0, new Scalar(255, 255, 0));
+            mOnCameraFrameRender.render(imageFrame,inputFrame.gray());
         } else {
             Imgproc.putText(imageFrame, "UnCalibrated", new Point(50, 50),
                     Core.FONT_HERSHEY_SIMPLEX, 1.0, new Scalar(255, 255, 0));
         }
-
+        //if (mOnCameraFrameRender !=null)
+           // return mOnCameraFrameRender.render(imageFrame,inputFrame.gray());
         return imageFrame;
     }
 
@@ -246,5 +267,70 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+    static class MyRender{
+        private MatOfPoint3f object;
+        private CameraCalibrator mCalibrator;
+        private MatOfPoint3f Cobject;
+        private List<Point> imagePoints = new ArrayList<Point>();
+        private MatOfPoint2f ma2 = new MatOfPoint2f();
+
+        private Mat over;
+        public MyRender(CameraCalibrator calibrator, Activity a) {
+            mCalibrator = calibrator;
+            //Assume UnDistorted
+            // 3D model
+            List<Point3> model = new ArrayList<Point3>();
+            List<Point3> Cmodel = new ArrayList<Point3>();
+            model.add(new Point3(0,0,0));
+            model.add(new Point3(0,3,0));
+            model.add(new Point3(3,3,0));
+            model.add(new Point3(3,0,0));
+            Cmodel.addAll(model.subList(0,4));
+            Cmodel.add(new Point3(3, 0, 1));
+            Cmodel.add(new Point3(3, 3, 1));
+            Cmodel.add(new Point3(0, 3, 1));
+            Cmodel.add(new Point3(0, 0, 1));
+            //2D points
+            imagePoints.add(new Point(0,0));
+            imagePoints.add(new Point(0, 67));
+            imagePoints.add(new Point(74, 67));
+            imagePoints.add(new Point(74, 0));
+            ma2.fromList(imagePoints);
+            object = new MatOfPoint3f();
+            Cobject = new MatOfPoint3f();
+            object.fromList(model);
+            Cobject.fromList(Cmodel);
+            Log.i("hej:", "ModelsDone");
+            over = Mat.zeros(74, 67, CvType.CV_8UC3);
+            Resources res = a.getResources();
+            Bitmap xMap = BitmapFactory.decodeResource(res, R.drawable.overlay);  // OverLay 2-D Image
+            Utils.bitmapToMat(xMap, over);
+        }
+
+        public Mat render(Mat inputFrame,Mat gray) {
+            Mat rgbaFrame = inputFrame;
+            Mat grayFrame = gray;
+            mCalibrator.findPattern(grayFrame);
+            if (mCalibrator.patternfound()) {
+                Point[] outerCorners = mCalibrator.getouterCorners();
+                MatOfPoint m1 = new MatOfPoint();
+                m1.fromArray(outerCorners);
+                List<MatOfPoint> contor = new ArrayList<>();
+                contor.add(m1);
+                int width = rgbaFrame.width();
+                int height = rgbaFrame.height();
+                MatOfPoint2f ma1 = new MatOfPoint2f();
+                ma1.fromArray(outerCorners);
+                Mat H = Calib3d.findHomography(ma2, ma1, 0, 5);
+                Mat overRot = Mat.zeros(width,height,CvType.CV_8UC3);
+                Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
+                Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
+                Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
+            }
+
+            return rgbaFrame;
+        }
     }
 }
