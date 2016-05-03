@@ -71,13 +71,6 @@ public class TestData extends Activity {
         // so any opencv call here will lead to unresolved native errors.
     }
 
-  /*  public void StartCameraCalibrator(){
-        if (mCalibrator == null)
-            mCalibrator = new CameraCalibrator(width, height, this);
-        if (CalibrationResult.tryLoad(this, mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients())) {
-            mCalibrator.setCalibrated();
-        }
-    }*/
 
     private boolean findPattern(Mat grayFrame) {
             return Calib3d.findCirclesGrid(grayFrame, mPatternSize,
@@ -104,12 +97,12 @@ public class TestData extends Activity {
         Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(mDistortionCoefficients);
         CameraCalibrator cal = new CameraCalibrator(width, height, this);
         Log.i("hej:", "StartCalibrationLoad ");
-      double[] values= new double[]{699.2254638671875, 0, 358.5,
-        0, 699.2254638671875, 202,
-        0, 0, 1};
-        for (i=0;i<9;i++){
-            mCameraMatrix.put(i/3,i%3,values[i]);
-        }
+         double[] values= new double[]{699.2254638671875, 0, 358.5,
+         0, 699.2254638671875, 202,
+         0, 0, 1};
+         for (i=0;i<9;i++){
+             mCameraMatrix.put(i/3,i%3,values[i]);
+         }
         int doWork = Integer.valueOf(mPrefs.getString("dWork", "0"));
         if (doWork==1) {
             if (!CalibrationResult.tryLoad(this, cal.getCameraMatrix(), cal.getDistortionCoefficients())) {
@@ -138,19 +131,36 @@ public class TestData extends Activity {
         // 3D model
         List<Point3> model = new ArrayList<Point3>();
         List<Point3> Cmodel = new ArrayList<Point3>();
+        List<Point3> Xmodel = new ArrayList<Point3>();
+        Xmodel.add(new Point3(0,0,0));
+        Xmodel.add(new Point3(0,1,0));
+        Xmodel.add(new Point3(0.5,0.5,1));
+        Xmodel.add(new Point3(1,1,0));
+        Xmodel.add(new Point3(1,0,0));
+        Xmodel.add(new Point3(0.5,0.5,1));
+        Xmodel.add(new Point3(0,0,0));
+        MatOfPoint3f Xobject = new MatOfPoint3f();
+        Xobject.fromList(Xmodel);
+
         model.add(new Point3(0,0,0));
-        model.add(new Point3(0,3,0));
-        model.add(new Point3(3,3,0));
-        model.add(new Point3(3,0,0));
+        model.add(new Point3(0,1,0));
+        model.add(new Point3(1,1,0));
+        model.add(new Point3(1,0,0));
         Cmodel.addAll(model.subList(0,4));
-        Cmodel.add(new Point3(3, 0, 1));
-        Cmodel.add(new Point3(3, 3, 1));
-        Cmodel.add(new Point3(0, 3, 1));
+        Cmodel.add(new Point3(1, 0, 1));
+        Cmodel.add(new Point3(1, 1, 1));
+        Cmodel.add(new Point3(0, 1, 1));
         Cmodel.add(new Point3(0, 0, 1));
+
+        //Xmodel.add(new Point3(0.5,0.5,0.5));
+        //Xmodel.add(new Point3(1.5,0.5,0.5));
+
+
         MatOfPoint3f object = new MatOfPoint3f();
         MatOfPoint3f Cobject = new MatOfPoint3f();
         object.fromList(model);
         Cobject.fromList(Cmodel);
+        Xobject.fromList(Xmodel);
         Log.i("hej:", "ModelsDone");
 
         //Image Is Turn by WarpProjective After findHomography
@@ -165,7 +175,6 @@ public class TestData extends Activity {
         Imgproc.cvtColor(m, gray, Imgproc.COLOR_BGR2GRAY);
         boolean contains = findPattern(gray);
         Mat over = Mat.zeros(widthx, heightx, CvType.CV_8UC3);
-
         Utils.bitmapToMat(xMap, over);
         if (contains) {
             Imgproc.putText(m, "Pattern Detected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
@@ -174,7 +183,6 @@ public class TestData extends Activity {
             Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
             Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
             Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
-           // outerCorners[4]=new Point(outerCorners[0].x+directionA.x*0.5,outerCorners[0].y+directionA.y*0.5);
             //2D points
             List<Point> imagePoints = new ArrayList<Point>();
             imagePoints.add(new Point(0,0));
@@ -192,14 +200,6 @@ public class TestData extends Activity {
             ma2.fromList(imagePoints);
             contor.add(m1);
             Mat H = Calib3d.findHomography(ma2, ma1, 0, 3);
-            if (i==2) {
-                double[] Troll = new double[]{-2.252397458004596, 0.7567594715236352, 418.1277336542512,
-                        0.8011375681858384, 0.8537940100559277, 64.07172258201339,
-                        -0.001520171284289029, -0.0007002159729610811, 1};
-                for (i = 0; i < 9; i++) {
-                    H.put(i / 3, i % 3, Troll[i]);
-                }
-            }
             Log.i("hej:", "Homography:"+H.dump());
             String resultMessage =H.dump();
             (Toast.makeText(TestData.this, resultMessage, Toast.LENGTH_LONG)).show();
@@ -224,7 +224,7 @@ public class TestData extends Activity {
                 MatOfPoint p = new MatOfPoint();
                 p.convertTo(p, CvType.CV_32S);
                 List<MatOfPoint> a = new ArrayList<>();
-                Calib3d.projectPoints(Cobject, rvec, tvec, mCameraMatrix, mDistortionCoefficients, respoints);
+                Calib3d.projectPoints(Xobject, rvec, tvec, mCameraMatrix, mDistortionCoefficients, respoints);
                 Log.i("hej:", "AtdrawingPhase" + respoints.dump());
                 p.fromList(respoints.toList());
                 a.add(0, p);
@@ -248,6 +248,7 @@ public class TestData extends Activity {
 
     Bitmap getTestImage(int i,Resources res){
         switch (i){
+            case 0:return BitmapFactory.decodeResource(res, R.drawable.overlay);
             case 1:return BitmapFactory.decodeResource(res, R.drawable.i01);
             case 2:return BitmapFactory.decodeResource(res, R.drawable.i02);
             case 3:return BitmapFactory.decodeResource(res, R.drawable.i03);

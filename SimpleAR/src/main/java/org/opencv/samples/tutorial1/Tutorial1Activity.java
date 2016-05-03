@@ -10,6 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.MatOfPoint3f;
@@ -274,34 +275,48 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         private CameraCalibrator mCalibrator;
         private MatOfPoint3f Cobject;
         private List<Point> imagePoints = new ArrayList<Point>();
+        List<Point3> Xmodel = new ArrayList<Point3>();
         private MatOfPoint2f ma2 = new MatOfPoint2f();
-
+        private MatOfDouble mCameraMatrix = new MatOfDouble();
+        private MatOfDouble mDistortionCoefficients = new MatOfDouble();
         private Mat over;
         public MyRender(CameraCalibrator calibrator, Activity a) {
             mCalibrator = calibrator;
             //Assume UnDistorted
             // 3D model
+            mCalibrator.getCameraMatrix().copyTo(mCameraMatrix);
+            mCalibrator.getDistortionCoefficients().copyTo(mDistortionCoefficients);
             List<Point3> model = new ArrayList<Point3>();
             List<Point3> Cmodel = new ArrayList<Point3>();
             model.add(new Point3(0,0,0));
-            model.add(new Point3(0,3,0));
-            model.add(new Point3(3,3,0));
-            model.add(new Point3(3,0,0));
+            model.add(new Point3(0,1,0));
+            model.add(new Point3(1,1,0));
+            model.add(new Point3(1,0,0));
             Cmodel.addAll(model.subList(0,4));
-            Cmodel.add(new Point3(3, 0, 1));
-            Cmodel.add(new Point3(3, 3, 1));
-            Cmodel.add(new Point3(0, 3, 1));
+            Cmodel.add(new Point3(1, 0, 1));
+            Cmodel.add(new Point3(1, 1, 1));
+            Cmodel.add(new Point3(0, 1, 1));
             Cmodel.add(new Point3(0, 0, 1));
             //2D points
             imagePoints.add(new Point(0,0));
             imagePoints.add(new Point(0, 67));
             imagePoints.add(new Point(74, 67));
             imagePoints.add(new Point(74, 0));
+
+            Xmodel.add(new Point3(0,0,0));
+            Xmodel.add(new Point3(0,1,0));
+            Xmodel.add(new Point3(0.5,0.5,1));
+            Xmodel.add(new Point3(1,1,0));
+            Xmodel.add(new Point3(1,0,0));
+            Xmodel.add(new Point3(0.5,0.5,1));
+            Xmodel.add(new Point3(0,0,0));
+            MatOfPoint3f Xobject = new MatOfPoint3f();
+            Xobject.fromList(Xmodel);
             ma2.fromList(imagePoints);
             object = new MatOfPoint3f();
             Cobject = new MatOfPoint3f();
             object.fromList(model);
-            Cobject.fromList(Cmodel);
+            Cobject.fromList(Xmodel);
             Log.i("hej:", "ModelsDone");
             over = Mat.zeros(74, 67, CvType.CV_8UC3);
             Resources res = a.getResources();
@@ -323,11 +338,30 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                 int height = rgbaFrame.height();
                 MatOfPoint2f ma1 = new MatOfPoint2f();
                 ma1.fromArray(outerCorners);
-                Mat H = Calib3d.findHomography(ma2, ma1, 0, 5);
+                Mat H = Calib3d.findHomography(ma2, ma1, 0, 2);
                 Mat overRot = Mat.zeros(width,height,CvType.CV_8UC3);
                 Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
                 Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
                 Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
+
+                ArrayList<Mat> rvecs = new ArrayList<>();
+                ArrayList<Mat> tvecs = new ArrayList<>();
+                Mat rvec = new Mat();
+                Mat tvec = new Mat();
+
+                Calib3d.solvePnP(object, ma1, mCameraMatrix, mDistortionCoefficients, rvec, tvec);
+                MatOfPoint2f respoints = new MatOfPoint2f();
+                // respoints.fromList(imagePoints);
+                MatOfPoint p = new MatOfPoint();
+                p.convertTo(p, CvType.CV_32S);
+                List<MatOfPoint> a = new ArrayList<>();
+                Calib3d.projectPoints(Cobject, rvec, tvec, mCameraMatrix, mDistortionCoefficients, respoints);
+                Log.i("hej:", "AtdrawingPhase" + respoints.dump());
+                p.fromList(respoints.toList());
+                a.add(0, p);
+                //p.fromList(respoints.toList().subList(5,9));
+                //a.add(1,p);
+                Imgproc.drawContours(rgbaFrame, a, 0, new Scalar(200, 50, 50), 10);
             }
 
             return rgbaFrame;
