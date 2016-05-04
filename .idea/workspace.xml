@@ -23,14 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="773fdfb2-cc59-47fc-91cd-1e0957f1cca6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_0_0_alpha1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_0_0_alpha1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_24_0_0_alpha1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_24_0_0_alpha1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/SimpleAR.iml" afterPath="$PROJECT_DIR$/SimpleAR/SimpleAR.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openCVLibrary310/openCVLibrary310.iml" afterPath="$PROJECT_DIR$/openCVLibrary310/openCVLibrary310.iml" />
     </list>
     <list id="938f7913-9c7a-4e53-950f-2bce71edfb83" name="Rejected commit: Default" comment="Updates Using TestData&#10;" />
     <ignored path="Augmented-Reality.iws" />
@@ -3161,7 +3154,13 @@
       <option name="project" value="LOCAL" />
       <updated>1462316407179</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="TestDataCalculations&#10;">
+      <created>1462328424310</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1462328424310</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
