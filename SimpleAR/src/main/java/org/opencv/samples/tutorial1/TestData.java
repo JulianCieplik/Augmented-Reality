@@ -181,25 +181,34 @@ public class TestData extends Activity {
             //Now The Corners Of Figure is in mCorner
             Point[] points = mCorners.toArray();
             Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
+            Point[] outerCornerA = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width],null,null};
             Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
             Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
+            outerCornerA[4]=new Point(points[0].x+0.5*directionA.x,points[0].y+0.5*directionA.y);
+            outerCornerA[5]=new Point(points[0].x+0.5*directionB.x,points[0].y+0.5*directionB.y);
             //2D points
             List<Point> imagePoints = new ArrayList<Point>();
             imagePoints.add(new Point(0,0));
             imagePoints.add(new Point(0, 67));
             imagePoints.add(new Point(74, 67));
             imagePoints.add(new Point(74, 0));
+            imagePoints.add(new Point(0, 34));
+            imagePoints.add(new Point(37, 0));
             //
             MatOfPoint m1 = new MatOfPoint();
             m1.fromArray(outerCorners);
+            MatOfPoint mx1 = new MatOfPoint();
+            m1.fromArray(points);
             Log.i("hej:", "m1:"+m1.dump());
             List<MatOfPoint> contor = new ArrayList<>();
             MatOfPoint2f ma1 = new MatOfPoint2f();
             ma1.fromArray(outerCorners);
+            MatOfPoint2f mx = new MatOfPoint2f();
+            mx.fromArray(outerCornerA);
             MatOfPoint2f ma2 = new MatOfPoint2f();
             ma2.fromList(imagePoints);
-            contor.add(m1);
-            Mat H = Calib3d.findHomography(ma2, ma1, 0, 3);
+            contor.add(mx1);
+            Mat H = Calib3d.findHomography(ma2, mx, Calib3d.RANSAC, 3);
             Log.i("hej:", "Homography:"+H.dump());
             String resultMessage =H.dump();
             (Toast.makeText(TestData.this, resultMessage, Toast.LENGTH_LONG)).show();

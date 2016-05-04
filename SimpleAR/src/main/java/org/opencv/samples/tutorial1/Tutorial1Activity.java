@@ -302,6 +302,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             imagePoints.add(new Point(0, 67));
             imagePoints.add(new Point(74, 67));
             imagePoints.add(new Point(74, 0));
+            imagePoints.add(new Point(0, 34));
+            imagePoints.add(new Point(37, 0));
 
             Xmodel.add(new Point3(0,0,0));
             Xmodel.add(new Point3(0,1,0));
@@ -338,12 +340,19 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                 int height = rgbaFrame.height();
                 MatOfPoint2f ma1 = new MatOfPoint2f();
                 ma1.fromArray(outerCorners);
-                Mat H = Calib3d.findHomography(ma2, ma1, 0, 2);
+                MatOfPoint2f mx1 = new MatOfPoint2f();
+                mx1.fromArray(mCalibrator.getouterCorners2());
+                Mat H = Calib3d.findHomography(ma2, mx1, Calib3d.RANSAC, 2);
                 Mat overRot = Mat.zeros(width,height,CvType.CV_8UC3);
                 Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
                 Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
                 Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
-
+                mx1 = new MatOfPoint2f();
+                mx1.fromArray(new Point[]{new Point(20,30),new Point(20,130),new Point(120,130),new Point(120,30),new Point(20,80),new Point(70,30)});
+                H = Calib3d.findHomography(ma2, mx1, 0, 3);
+                overRot = Mat.zeros(width,height,CvType.CV_8UC3);
+                Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
+                Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
                 ArrayList<Mat> rvecs = new ArrayList<>();
                 ArrayList<Mat> tvecs = new ArrayList<>();
                 Mat rvec = new Mat();

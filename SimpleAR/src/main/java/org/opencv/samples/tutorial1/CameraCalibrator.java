@@ -159,10 +159,18 @@ public class CameraCalibrator {
     public Point[] getouterCorners(){
         Point[] points = mCorners.toArray();
         Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
-        Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
-        Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
         return outerCorners;
     }
+    public Point[] getouterCorners2(){
+        Point[] points = mCorners.toArray();
+        Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width],null,null};
+        Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
+        Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
+        outerCorners[4]=new Point(points[0].x+0.5*directionA.x,points[0].y+0.5*directionA.y);
+        outerCorners[5]=new Point(points[0].x+0.5*directionB.x,points[0].y+0.5*directionB.y);
+        return outerCorners;
+    }
+
 
     private void drawPoints(Mat rgbaFrame) {
 
