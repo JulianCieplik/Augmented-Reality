@@ -3,8 +3,17 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="example_switch"
-        android:summary="@string/pref_description_switch"
-        android:title="@string/pref_title_switch" />
+        android:summary="Indicates if Camera Calibration should always be done"
+        android:title="Redo Calibration" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/D3dwireframe_titles"
+        android:entryValues="@array/D3dwireframe_values"
+        android:key="3Dframewire"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="3Dframewire to Draw" />
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->

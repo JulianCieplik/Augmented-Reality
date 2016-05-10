@@ -154,11 +154,11 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
     public boolean onOptionsItemSelected(MenuItem item) {
         String resultMessage =item.getGroupId()+"";
         (Toast.makeText(CameraCalibrationActivity.this, resultMessage, Toast.LENGTH_LONG)).show();
-        if (item.getGroupId()==2) {
+        if (item.getGroupId()==1) {
             int id = item.getItemId();
             Camera.Size resolution = mResolutionList.get(id);
             mOpenCvCameraView.setResolution(resolution);
-            mCalibrator.ResChanged(resolution.width, resolution.height);
+            //mCalibrator.ResChanged(resolution.width, resolution.height);
             resolution = mOpenCvCameraView.getResolution();
             String caption = Integer.valueOf(resolution.width).toString() + "x" + Integer.valueOf(resolution.height).toString();
             Toast.makeText(this, caption, Toast.LENGTH_SHORT).show();
@@ -223,7 +223,7 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
 
                     if (mCalibrator.isCalibrated()) {
                         CalibrationResult.save(CameraCalibrationActivity.this,
-                                mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients());
+                                mCalibrator.getCameraMatrix(), mCalibrator.getDistortionCoefficients(),mWidth,mHeight);
                     }
                 }
             }.execute();
@@ -260,11 +260,15 @@ public class CameraCalibrationActivity extends Activity implements CvCameraViewL
         if (notDone)
         {
             mOpenCvCameraView.updateResolution();
+            Camera.Size resolution = mOpenCvCameraView.getResolution();
+            mHeight=resolution.height;
+            mWidth=resolution.width;
+        }
+        if (mCalibrator.patternfound()){
+            mOpenCvCameraView.takePicture();
         }
         mCalibrator.addCorners();
-        if (mCalibrator.patternfound()){
-        mOpenCvCameraView.takePicture();
-        }
+
         return false;
     }
 }

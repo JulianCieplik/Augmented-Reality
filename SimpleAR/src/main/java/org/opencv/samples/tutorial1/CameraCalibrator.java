@@ -16,6 +16,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
@@ -26,6 +27,8 @@ public class CameraCalibrator {
     private SharedPreferences mPrefs;
     private static Size mPatternSize = new Size(4, 11);
     private static int mCornersSize = (int)(mPatternSize.width * mPatternSize.height);
+    public static int calw=1;
+    public static int calh=1;
     private int patternType;
     private boolean mPatternWasFound = false;
     public MatOfPoint2f mCorners = new MatOfPoint2f();
@@ -33,6 +36,7 @@ public class CameraCalibrator {
     private boolean mIsCalibrated = false;
 
     private Mat mCameraMatrix = new Mat();
+    private Mat msCameraMatrix = new Mat(); // The scaled one!
     private Mat mDistortionCoefficients = new Mat();
     private int mFlags;
     private double mRms;
@@ -55,8 +59,22 @@ public class CameraCalibrator {
                  Calib3d.CALIB_FIX_K5;
         Mat.eye(3, 3, CvType.CV_64FC1).copyTo(mCameraMatrix);
         mCameraMatrix.put(0, 0, 1.0);
+        mCameraMatrix.copyTo(msCameraMatrix);
         Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(mDistortionCoefficients);
         //Log.i(TAG, "started " + this.getClass());
+        SharedPreferences sharedPref = a.getSharedPreferences("Store", Context.MODE_APPEND);
+        calw=sharedPref.getInt("width",width);
+        calh=sharedPref.getInt("height",height);
+    }
+
+    public void ReloadSettings(Activity a){
+        mPrefs=PreferenceManager.getDefaultSharedPreferences(a);
+        int i = Integer.valueOf(mPrefs.getString("d1","4"));
+        int j = Integer.valueOf(mPrefs.getString("d2","11"));
+        int k = Integer.valueOf(mPrefs.getString("sync_frequency","1"));
+        mPatternSize = new Size(i,j);
+        patternType= k;
+        ResChanged((int)mImageSize.width,(int)mImageSize.height);
     }
 
     public void processFrame(Mat grayFrame, Mat rgbaFrame) {
@@ -64,10 +82,16 @@ public class CameraCalibrator {
         renderFrame(rgbaFrame);
     }
 
-    public void ResChanged(int width,int height){
-        mImageSize =  new Size(width,height);
-    }
 
+    public void ResChanged(int width,int height){
+
+        mImageSize =  new Size(width,height);
+        double[] d=new double[]{width/calw,1,width/calw,1,height/calh,height/calh,1,1,1};
+        Mat mScale= new Mat(3,3,CvType.CV_64FC1);
+        mScale.put(0,0,d);
+        mCameraMatrix.copyTo(msCameraMatrix);
+        msCameraMatrix.mul(mScale);
+    }
     public void calibrate() {
         ArrayList<Mat> rvecs = new ArrayList<>();
         ArrayList<Mat> tvecs = new ArrayList<>();
@@ -81,10 +105,11 @@ public class CameraCalibrator {
 
         Calib3d.calibrateCamera(objectPoints, mCornersBuffer, mImageSize,
                 mCameraMatrix, mDistortionCoefficients, rvecs, tvecs, mFlags);
-
+        mCameraMatrix.copyTo(msCameraMatrix);
         mIsCalibrated = Core.checkRange(mCameraMatrix)
                 && Core.checkRange(mDistortionCoefficients);
-
+        calh=(int)mImageSize.height;
+        calw=(int)mImageSize.width;
         mRms = computeReprojectionErrors(objectPoints, rvecs, tvecs, reprojectionErrors);
         //% Log.i(TAG, String.format("Average re-proj error: %f", mRms));
        // Log.i(TAG, "Camera matrix: " + mCameraMatrix.dump());
@@ -143,7 +168,7 @@ public class CameraCalibrator {
             mPatternWasFound = Calib3d.findCirclesGrid(grayFrame, mPatternSize,
                     mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING);
         }else{
-            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_FILTER_QUADS);
+            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_NORMALIZE_IMAGE+Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_FILTER_QUADS);
         }
     }
 
