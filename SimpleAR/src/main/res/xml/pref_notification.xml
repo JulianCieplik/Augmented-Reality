@@ -3,7 +3,6 @@
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked.
 
-
     <SwitchPreference
         android:defaultValue="true"
         android:key="notifications_new_message"
@@ -51,10 +50,18 @@
         android:key="eWork"
         android:defaultValue="0"
         android:title="Do3D rending"
-        android:summary="Preform Camera Calibration"
+        android:summary="Render 3D wireframe"
         android:numeric="integer"
         android:maxLength="1"
         />
+    <EditTextPreference
+    android:key="Solid"
+    android:defaultValue="0"
+    android:title="Draw 3D Box"
+    android:summary="Render 3D box"
+    android:numeric="integer"
+    android:maxLength="1"
+    />
     <EditTextPreference
         android:key="Timg"
         android:defaultValue="1"

@@ -18,14 +18,38 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="@string/pref_default_display_name"
-        android:inputType="textCapWords"
-        android:key="example_text"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_display_name" />
+    android:key="homoScale"
+    android:defaultValue="1.0"
+    android:title="Scalehomography"
+    android:summary="The Homography ScaleFactor"
+    android:numeric="decimal"
+    android:maxLength="4"
+    />
+    <EditTextPreference
+        android:key="Wfh"
+        android:defaultValue="1.0"
+        android:title="HeightWireframe"
+        android:summary="The height ScaleFactor"
+        android:numeric="decimal"
+        android:maxLength="4"
+        />
+    <EditTextPreference
+        android:key="wscale"
+        android:defaultValue="1.0"
+        android:title="Width ScaleFactor"
+        android:summary="The Width ScaleFactor"
+        android:numeric="decimal"
+        android:maxLength="4"
+        />
+    <EditTextPreference
+        android:key="solid"
+        android:defaultValue="1.0"
+        android:title="Solid ScaleFactor"
+        android:summary="The Uniform soild ScaleFactor"
+        android:numeric="decimal"
+        android:maxLength="4"
+        />
+
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->

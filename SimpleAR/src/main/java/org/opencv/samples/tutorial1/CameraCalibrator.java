@@ -29,15 +29,12 @@ public class CameraCalibrator {
     private static int mCornersSize = (int)(mPatternSize.width * mPatternSize.height);
     public static int calw=1;
     public static int calh=1;
-    private int patternType;
+    public int patternType;
     private boolean mPatternWasFound = false;
     public MatOfPoint2f mCorners = new MatOfPoint2f();
     private List<Mat> mCornersBuffer = new ArrayList<Mat>();
     private boolean mIsCalibrated = false;
 
-    private Mat mCameraMatrix = new Mat();
-    private Mat msCameraMatrix = new Mat(); // The scaled one!
-    private Mat mDistortionCoefficients = new Mat();
     private int mFlags;
     private double mRms;
     private double mSquareSize = 0.0181;
@@ -57,10 +54,10 @@ public class CameraCalibrator {
                  Calib3d.CALIB_FIX_ASPECT_RATIO +
                  Calib3d.CALIB_FIX_K4 +
                  Calib3d.CALIB_FIX_K5;
-        Mat.eye(3, 3, CvType.CV_64FC1).copyTo(mCameraMatrix);
-        mCameraMatrix.put(0, 0, 1.0);
-        mCameraMatrix.copyTo(msCameraMatrix);
-        Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(mDistortionCoefficients);
+        Mat.eye(3, 3, CvType.CV_64FC1).copyTo(AR_Engine.mCameraMatrix);
+        AR_Engine.mCameraMatrix.put(0, 0, 1.0);
+        //AR_Engine.mCameraMatrix.copyTo(msCameraMatrix);
+        Mat.zeros(5, 1, CvType.CV_64FC1).copyTo(AR_Engine.mDistortionCoefficients);
         //Log.i(TAG, "started " + this.getClass());
         SharedPreferences sharedPref = a.getSharedPreferences("Store", Context.MODE_APPEND);
         calw=sharedPref.getInt("width",width);
@@ -85,16 +82,19 @@ public class CameraCalibrator {
 
     public void ResChanged(int width,int height){
 
-        mImageSize =  new Size(width,height);
-        double[] d=new double[]{width/calw,1,width/calw,1,height/calh,height/calh,1,1,1};
-        Mat mScale= new Mat(3,3,CvType.CV_64FC1);
-        mScale.put(0,0,d);
-        mCameraMatrix.copyTo(msCameraMatrix);
-        msCameraMatrix.mul(mScale);
+    //    mImageSize =  new Size(width,height);
+    //    double[] d=new double[]{width/calw,1,width/calw,1,height/calh,height/calh,1,1,1};
+    //    Mat mScale= new Mat(3,3,CvType.CV_64FC1);
+    //    mScale.put(0,0,d);
+    //    AR_Engine.mCameraMatrix.copyTo(msCameraMatrix);
+    //    msCameraMatrix.mul(mScale);
     }
+
     public void calibrate() {
-        ArrayList<Mat> rvecs = new ArrayList<>();
-        ArrayList<Mat> tvecs = new ArrayList<>();
+
+        ArrayList<Mat> rvecs = new ArrayList<>(); // latest series of Configuration
+        ArrayList<Mat> tvecs = new ArrayList<>(); // latest series of Configuration
+
         Mat reprojectionErrors = new Mat();
         ArrayList<Mat> objectPoints = new ArrayList<>();
         objectPoints.add(Mat.zeros(mCornersSize, 1, CvType.CV_32FC3));
@@ -104,16 +104,16 @@ public class CameraCalibrator {
         }
 
         Calib3d.calibrateCamera(objectPoints, mCornersBuffer, mImageSize,
-                mCameraMatrix, mDistortionCoefficients, rvecs, tvecs, mFlags);
-        mCameraMatrix.copyTo(msCameraMatrix);
-        mIsCalibrated = Core.checkRange(mCameraMatrix)
-                && Core.checkRange(mDistortionCoefficients);
+                AR_Engine.mCameraMatrix, AR_Engine.mDistortionCoefficients, rvecs, tvecs, mFlags);
+      //  AR_Engine.mCameraMatrix.copyTo(msCameraMatrix);
+        mIsCalibrated = Core.checkRange(AR_Engine.mCameraMatrix)
+                && Core.checkRange(AR_Engine.mDistortionCoefficients);
         calh=(int)mImageSize.height;
         calw=(int)mImageSize.width;
         mRms = computeReprojectionErrors(objectPoints, rvecs, tvecs, reprojectionErrors);
         //% Log.i(TAG, String.format("Average re-proj error: %f", mRms));
-       // Log.i(TAG, "Camera matrix: " + mCameraMatrix.dump());
-        // Log.i(TAG, "Distortion coefficients: " + mDistortionCoefficients.dump());
+       // Log.i(TAG, "Camera matrix: " + AR_Engine.mCameraMatrix.dump());
+        // Log.i(TAG, "Distortion coefficients: " + AR_Engine.mDistortionCoefficients.dump());
     }
 
     public void clearCorners() {
@@ -123,7 +123,6 @@ public class CameraCalibrator {
     private void calcBoardCornerPositions(Mat corners) {
         final int cn = 3;
         float positions[] = new float[mCornersSize * cn];
-
         for (int i = 0; i < mPatternSize.height; i++) {
             for (int j = 0; j < mPatternSize.width * cn; j += cn) {
                 positions[(int) (i * mPatternSize.width * cn + j + 0)] =
@@ -135,6 +134,7 @@ public class CameraCalibrator {
         }
         corners.create(mCornersSize, 1, CvType.CV_32FC3);
         corners.put(0, 0, positions);
+      //  Log.i(TAG, "Distortion coefficients: " + AR_Engine.mDistortionCoefficients.dump());
     }
 
     private double computeReprojectionErrors(List<Mat> objectPoints,
@@ -144,12 +144,12 @@ public class CameraCalibrator {
         double error;
         float viewErrors[] = new float[objectPoints.size()];
 
-        MatOfDouble distortionCoefficients = new MatOfDouble(mDistortionCoefficients);
+        MatOfDouble distortionCoefficients = new MatOfDouble(AR_Engine.mDistortionCoefficients);
         int totalPoints = 0;
         for (int i = 0; i < objectPoints.size(); i++) {
             MatOfPoint3f points = new MatOfPoint3f(objectPoints.get(i));
             Calib3d.projectPoints(points, rvecs.get(i), tvecs.get(i),
-                    mCameraMatrix, distortionCoefficients, cornersProjected);
+                    AR_Engine.mCameraMatrix, distortionCoefficients, cornersProjected);
             error = Core.norm(mCornersBuffer.get(i), cornersProjected, Core.NORM_L2);
 
             int n = objectPoints.get(i).rows();
@@ -164,11 +164,15 @@ public class CameraCalibrator {
     }
 
     public void findPattern(Mat grayFrame) {
-        if (patternType==1) {
-            mPatternWasFound = Calib3d.findCirclesGrid(grayFrame, mPatternSize,
-                    mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING);
-        }else{
-            mPatternWasFound = Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_NORMALIZE_IMAGE+Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_FILTER_QUADS);
+        switch (patternType){
+            case 1: mPatternWasFound= Calib3d.findCirclesGrid(grayFrame, mPatternSize,
+                    mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING); break;
+            case 2: mPatternWasFound= Calib3d.findCirclesGrid(grayFrame, mPatternSize,
+                    mCorners,Calib3d.CALIB_CB_SYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING); break;
+            case 3: mPatternWasFound= Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_NORMALIZE_IMAGE+Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_ADAPTIVE_THRESH);
+                    break;
+            case 4:  mPatternWasFound= Calib3d.findCirclesGrid(grayFrame, mPatternSize,
+                    mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID);
         }
     }
 
@@ -186,17 +190,6 @@ public class CameraCalibrator {
         Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width]};
         return outerCorners;
     }
-    public Point[] getouterCorners2(){
-        Point[] points = mCorners.toArray();
-        Point[] outerCorners = new Point[]{points[0],points[(int)mPatternSize.width-1],points[(int)(mPatternSize.width*(mPatternSize.height)-1)],points[points.length-(int)mPatternSize.width],null,null};
-        Point directionA = new Point(outerCorners[1].x-outerCorners[0].x,outerCorners[1].y-outerCorners[0].y);
-        Point directionB = new Point(outerCorners[2].x-outerCorners[0].x,outerCorners[2].y-outerCorners[0].y);
-        outerCorners[4]=new Point(points[0].x+0.5*directionA.x,points[0].y+0.5*directionA.y);
-        outerCorners[5]=new Point(points[0].x+0.5*directionB.x,points[0].y+0.5*directionB.y);
-        return outerCorners;
-    }
-
-
     private void drawPoints(Mat rgbaFrame) {
 
         Calib3d.drawChessboardCorners(rgbaFrame, mPatternSize, mCorners, mPatternWasFound);
@@ -210,11 +203,11 @@ public class CameraCalibrator {
     }
 
     public Mat getCameraMatrix() {
-        return mCameraMatrix;
+        return AR_Engine.mCameraMatrix;
     }
 
     public Mat getDistortionCoefficients() {
-        return mDistortionCoefficients;
+        return AR_Engine.mDistortionCoefficients;
     }
 
     public int getCornersBufferSize() {

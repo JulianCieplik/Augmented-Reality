@@ -64,12 +64,14 @@
         <item>OpenBlock</item>
         <item>ClosedBlock</item>
         <item>Spheroid</item>
+        <item>Nothing</item>
     </string-array>
     <string-array name="D3dwireframe_values">
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string name="pref_title_system_sync_settings">System sync settings</string>

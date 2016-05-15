@@ -18,6 +18,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +47,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
+import static android.widget.Toast.makeText;
 
 public class Tutorial1Activity extends Activity implements CvCameraViewListener2, View.OnTouchListener {
     private static final String TAG = "OCVSample::Activity";
@@ -151,6 +155,11 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             Intent intent = new Intent(this, CameraCalibrationActivity.class);
             startActivity(intent);
         }
+        if (mCalibrator.patternfound()){
+            mOpenCvCameraView.takePicture();
+            String resultMessage = "ImageTakenDone!";
+            (makeText(null, resultMessage, Toast.LENGTH_LONG)).show();
+        }
         return false;
     }
 
@@ -174,9 +183,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu1, menu);
-
         mResolutionMenu = menu.addSubMenu("Resolution");
         mResolutionMenu.setGroupCheckable(1,true,true);
         SubMenu mResolutionMenu2 = menu.addSubMenu("Calibrate");
@@ -200,7 +206,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                     int id = item.getItemId();
                     Size resolution = mResolutionList.get(id);
                     mOpenCvCameraView.setResolution(resolution);
-                    mCalibrator.ResChanged(resolution.width,resolution.height);
+                   // mCalibrator.ResChanged(resolution.width,resolution.height);
                     mOnCameraFrameRender.resChanged();
                     resolution = mOpenCvCameraView.getResolution();
                     String caption = Integer.valueOf(resolution.width).toString() + "x" + Integer.valueOf(resolution.height).toString();
@@ -223,8 +229,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat imageFrame = inputFrame.rgba();
         if (mCalibrator.isCalibrated()) {
-           // Imgproc.putText(imageFrame, "Calibrated", new Point(50, 50),
-            //        Core.FONT_HERSHEY_SIMPLEX, 1.0, new Scalar(255, 255, 0));
             mOnCameraFrameRender.render(imageFrame,inputFrame.gray());
         } else {
             Imgproc.putText(imageFrame, "UnCalibrated", new Point(50, 50),
@@ -279,38 +283,34 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         private MatOfPoint3f object;
         private CameraCalibrator mCalibrator;
         private MatOfPoint3f Cobject;
-        private List<Point> imagePoints = new ArrayList<Point>();
         private MatOfPoint2f ma2 = new MatOfPoint2f();
         private Mat over;
+        private boolean showHomog;
+        public int show3Dwire= 1;
+        public int solid=1;
+        private boolean wireframe=true;
         public void resChanged(){
-            mCalibrator.getCameraMatrix().copyTo(AR_Engine.mCameraMatrix);
-            mCalibrator.getDistortionCoefficients().copyTo(AR_Engine.mDistortionCoefficients);
-        };
+        }
 
         public MyRender(CameraCalibrator calibrator, Activity a) {
             mCalibrator = calibrator;
             //Assume UnDistorted
             // 3D model
-            mCalibrator.getCameraMatrix().copyTo(AR_Engine.mCameraMatrix);
-            mCalibrator.getDistortionCoefficients().copyTo(AR_Engine.mDistortionCoefficients);
-            List<Point3> model = new ArrayList<Point3>();
-            model.add(new Point3(0,0,0));
-            model.add(new Point3(0,1,0));
-            model.add(new Point3(1,1,0));
-            model.add(new Point3(1,0,0));
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(a);
+            int showHomo = Integer.valueOf(mPrefs.getString("zWork","1"));  // Display The Homography
+            show3Dwire = Integer.valueOf(mPrefs.getString("3Dframewire","1"));  // Display The Homography
+            showHomog = showHomo==1;
+            wireframe=Integer.valueOf(mPrefs.getString("figure","1"))==1;
+            solid = Integer.valueOf(mPrefs.getString("Solid","1"));
+            float homoScale = Float.valueOf(mPrefs.getString("homoScale","1.0")); //Scale of Homography
             //2D points (1/2 scaled)
+            List<Point> imagePoints = new ArrayList<Point>();
             imagePoints.add(new Point(0,0));
-            imagePoints.add(new Point(0, 67*2));
-            imagePoints.add(new Point(74*2, 67*2));
-            imagePoints.add(new Point(74*2, 0));
-
-            MatOfPoint3f Xobject = new MatOfPoint3f();
-            Xobject=AR_Engine.Triangle();
+            imagePoints.add(new Point(0, 67*homoScale));
+            imagePoints.add(new Point(74*homoScale, 67*homoScale));
+            imagePoints.add(new Point(74*homoScale, 0));
             ma2.fromList(imagePoints);
-            object = new MatOfPoint3f();
-            Cobject = new MatOfPoint3f();
-            object.fromList(model);
-            Cobject=AR_Engine.Triangle();
+            Cobject=AR_Engine.Get3Dfigure(show3Dwire);
             Log.i("hej:", "ModelsDone");
             over = Mat.zeros(74, 67, CvType.CV_8UC3);
             Resources res = a.getResources();
@@ -332,31 +332,29 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                 contor.add(m1);
                 int width = rgbaFrame.width();
                 int height = rgbaFrame.height();
-                Mat H = Calib3d.findHomography(ma2, ma1, 0, 3);
-                Mat overRot = Mat.zeros(width,height,CvType.CV_8UC3);
-                Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
-                Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
+                if (showHomog) {
+                    Mat H = Calib3d.findHomography(ma2, ma1, 0, 3);
+                    Mat overRot = Mat.zeros(width, height, CvType.CV_8UC3);
+                    Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
+                    Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
+                }
                 Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
-               // MatOfPoint2f mx1 = new MatOfPoint2f();
-              //  mx1.fromArray(new Point[]{new Point(20,30),new Point(20,80),new Point(70,80),new Point(70,30),new Point(20,55),new Point(45,30)});
-               // H = Calib3d.findHomography(ma2, ma1, 0, 3);
-               // overRot = Mat.zeros(width,height,CvType.CV_8UC3);
-               // Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
-               // Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
-
-                AR_Engine.solvePnP(object,ma1);
-                MatOfPoint2f respoints = AR_Engine.projectPoints(Cobject);
-                MatOfPoint p = new MatOfPoint();
-                p.convertTo(p, CvType.CV_32S);
-                List<MatOfPoint> a = new ArrayList<>();
-
-                Log.i("hej:", "AtdrawingPhase" + respoints.dump());
-                p.fromList(respoints.toList());
-                a.add(0, p);
-                Imgproc.drawContours(rgbaFrame, a, 0, new Scalar(200, 50, 50), 10);
-                AR_Engine.DrawMultiColoredBox(rgbaFrame);
+                AR_Engine.solvePnP(ma1);
+                if (wireframe) {
+                    MatOfPoint2f respoints = AR_Engine.projectPoints(Cobject);
+                    MatOfPoint p = new MatOfPoint();
+                    p.convertTo(p, CvType.CV_32S);
+                    List<MatOfPoint> a = new ArrayList<>();
+                    p.fromList(respoints.toList());
+                    a.add(0, p);
+                    Imgproc.drawContours(rgbaFrame, a, 0, new Scalar(200, 50, 50), 10);
+                }
+                if (solid==1) {
+                    AR_Engine.DrawOneColoredBox(rgbaFrame);
+                }else if (solid==2){
+                    AR_Engine.DrawMultiColoredBox(rgbaFrame);
+                }
                 AR_Engine.drawAxis(rgbaFrame);
-
             }
 
             return rgbaFrame;

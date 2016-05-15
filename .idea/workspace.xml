@@ -21,30 +21,32 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" line="180" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" line="165" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="773fdfb2-cc59-47fc-91cd-1e0957f1cca6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/cb65.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/circle_pattern32.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i9x6.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i15b.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/w1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/w2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/w3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/w4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/w5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/drawable/xchessboard.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/SimpleAR.iml" afterPath="$PROJECT_DIR$/SimpleAR/SimpleAR.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" afterPath="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml" afterPath="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openCVLibrary310/openCVLibrary310.iml" afterPath="$PROJECT_DIR$/openCVLibrary310/openCVLibrary310.iml" />
     </list>
     <list id="938f7913-9c7a-4e53-950f-2bce71edfb83" name="Rejected commit: Default" comment="Updates Using TestData&#10;" />
     <ignored path="Augmented-Reality.iws" />
@@ -79,42 +81,36 @@
         <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="246" column="34" selection-start-line="246" selection-start-column="13" selection-end-line="246" selection-end-column="49" />
+              <caret line="217" column="76" selection-start-line="217" selection-start-column="76" selection-end-line="217" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#7534#7541#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConfigActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
+      <file leaf-file-name="tutorial1_surface_view.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/tutorial1_surface_view.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraCalibrator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java">
+      <file leaf-file-name="Tutorial1Activity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+              <caret line="342" column="23" selection-start-line="342" selection-start-column="15" selection-end-line="342" selection-end-column="32" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#12083#12090#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AboutActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AboutActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -123,51 +119,84 @@
         <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+              <caret line="272" column="34" selection-start-line="272" selection-start-column="34" selection-end-line="272" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#851#852#0" expanded="true" />
+                <element signature="e#885#886#0" expanded="true" />
+                <element signature="method#AR_Engine#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#solvePnP#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#projectPoints#0;class#AR_Engine#0" expanded="false" />
+                <element signature="method#DrawMultiColoredBox#0;class#AR_Engine#0" expanded="false" />
+                <element signature="method#DrawOneColoredBox#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#Get3Dfigure#0;class#AR_Engine#0" expanded="false" />
+                <element signature="method#Nothing#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#drawAxis#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#D3Axis#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#Triangle#0;class#AR_Engine#0" expanded="false" />
                 <element signature="method#TrianglePart#0;class#AR_Engine#0" expanded="false" />
-                <element signature="e#7657#7658#0" expanded="true" />
-                <element signature="e#7684#7685#0" expanded="true" />
+                <element signature="docComment;method#SquareBox#0;class#AR_Engine#0" expanded="false" />
+                <element signature="method#SquareBox#0;class#AR_Engine#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraCalibrationActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java">
+      <file leaf-file-name="CameraCalibrator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="14" selection-start-line="160" selection-start-column="14" selection-end-line="160" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalibrationResult.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tutorial1Activity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57168144">
-              <caret line="347" column="74" selection-start-line="347" selection-start-column="74" selection-end-line="347" selection-end-column="74" />
+              <caret line="174" column="64" selection-start-line="174" selection-start-column="64" selection-end-line="174" selection-end-column="64" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#8778#8779#0" expanded="true" />
+                <element signature="e#8824#8825#0" expanded="true" />
+                <element signature="e#8870#8871#0" expanded="true" />
+                <element signature="e#8926#8927#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pref_data_sync.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_data_sync.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.4615384">
+              <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pref_general.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7017544">
+              <caret line="25" column="19" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="19" />
+              <folding>
+                <element signature="e#2310#2354#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pref_headers.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.8461537">
+              <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+              <folding>
+                <element signature="e#552#570#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pref_notification.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.730769">
+              <caret line="57" column="20" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -176,8 +205,11 @@
         <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-              <folding />
+              <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+              <folding>
+                <element signature="e#1341#1342#0" expanded="true" />
+                <element signature="e#1375#1376#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2586,19 +2618,19 @@
         <option value="$PROJECT_DIR$/SimpleAR/src/main/res/layout/activity_about.xml" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/OnCameraFrameRender.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_data_sync.xml" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/res/menu/calibration.xml" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java" />
         <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java" />
-        <option value="$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java" />
+        <option value="$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml" />
       </list>
     </option>
   </component>
@@ -2613,10 +2645,9 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="4" />
+    <option name="width" value="1924" />
+    <option name="height" value="981" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -2643,7 +2674,26 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Augmented-Reality" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2664,37 +2714,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Augmented-Reality" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Augmented-Reality" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Augmented-Reality" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2709,10 +2730,9 @@
     <property name="device.picker.selection" value="emulator-5554" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\drawable" />
-      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\drawable-xxhdpi" />
-      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\menu" />
+      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src" />
     </key>
     <key name="android.template.packageName">
       <recent name="org.opencv.samples.tutorial1" />
@@ -2720,9 +2740,10 @@
     <key name="android.template.parentActivityClass">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\drawable" />
-      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src" />
+      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\drawable-xxhdpi" />
+      <recent name="C:\Users\Mikael\Documents\github\ArgumentedReality\Augmented-Reality\SimpleAR\src\main\res\menu" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.SimpleAR">
@@ -3097,7 +3118,13 @@
       <option name="project" value="LOCAL" />
       <updated>1462328434337</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="TestDataCalculations&#10;">
+      <created>1462921252791</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1462921252791</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -3110,35 +3137,35 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="4" y="0" width="1924" height="981" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32618025" sideWeight="0.4078091" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27694407" sideWeight="0.4635193" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889125" sideWeight="0.59219086" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33964366" sideWeight="0.51824033" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3414338" sideWeight="0.4967811" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.4943274" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3986637" sideWeight="0.4978678" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39854193" sideWeight="0.49570817" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3143777" sideWeight="0.398374" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3430821" sideWeight="0.48175967" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44957474" sideWeight="0.64753217" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4532294" sideWeight="0.6034115" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31737193" sideWeight="0.46801707" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3207127" sideWeight="0.48187634" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31276825" sideWeight="0.5095613" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45219347" sideWeight="0.37339056" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44957474" sideWeight="0.3524678" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959402" sideWeight="0.4869281" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32742155" sideWeight="0.4806867" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3107676" sideWeight="0.4904387" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31276825" sideWeight="0.4904387" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32739422" sideWeight="0.4892704" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.4078091" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32814237" sideWeight="0.49573562" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.47764227" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3196,68 +3223,49 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java</url>
+          <line>185</line>
+          <properties />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java</url>
+          <line>138</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java</url>
+          <line>141</line>
+          <properties />
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java</url>
+          <line>140</line>
+          <properties />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java</url>
+          <line>151</line>
+          <properties />
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java</url>
+          <line>148</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/openCVLibrary310/src/main/java/org/opencv/android/CameraBridgeViewBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="454" column="0" selection-start-line="454" selection-start-column="0" selection-end-line="454" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openCVLibrary310/src/main/java/org/opencv/android/JavaCameraView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="242" column="0" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openCVLibrary310/src/main/java/org/opencv/core/Core.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="877" column="0" selection-start-line="877" selection-start-column="0" selection-end-line="877" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#79854#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#54241#54242#0" expanded="false" />
-            <element signature="e#54284#54285#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/OnCameraFrameRender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/overlay.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i02.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i03.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i04.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i05.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -3273,32 +3281,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i08.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i09.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i9x6.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i10.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i11.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i12.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -3308,36 +3291,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i14.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i15.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3352,55 +3309,6 @@
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/cb65.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i01.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/menu/calibration.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308">
-          <caret line="5" column="51" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.679245">
-          <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="21.923077">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.423077">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.65384614">
-          <caret line="5" column="47" selection-start-line="5" selection-start-column="47" selection-end-line="5" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_data_sync.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7308411">
-          <caret line="23" column="28" selection-start-line="21" selection-start-column="2" selection-end-line="28" selection-end-column="60" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/circle_pattern32.png">
@@ -3474,19 +3382,78 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java">
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i09.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i08.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i12.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i10.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i14.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i15.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i11.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i15b.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i01.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i02.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/drawable/i03.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/values/dimens.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="14" selection-start-line="160" selection-start-column="14" selection-end-line="160" selection-end-column="14" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java">
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/menu/calibration.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-          <folding />
+        <state vertical-scroll-proportion="-6.5384617">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding>
+            <element signature="e#223#249#0" expanded="true" />
+            <element signature="e#379#401#0" expanded="true" />
+            <element signature="e#585#606#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3498,47 +3465,163 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/activity_about.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/camera_calibration_surface_view.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#solvePnP#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#projectPoints#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#Get3Dfigure#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#drawAxis#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#D3Axis#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#Triangle#0;class#AR_Engine#0" expanded="false" />
-            <element signature="method#TrianglePart#0;class#AR_Engine#0" expanded="false" />
-            <element signature="e#7657#7658#0" expanded="true" />
-            <element signature="e#7684#7685#0" expanded="true" />
-          </folding>
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/activity_test_data.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.773585">
+          <caret line="73" column="15" selection-start-line="73" selection-start-column="15" selection-end-line="73" selection-end-column="15" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/ConfigActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="11" selection-start-line="210" selection-start-column="11" selection-end-line="210" selection-end-column="11" />
+          <caret line="128" column="25" selection-start-line="128" selection-start-column="25" selection-end-line="128" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CalibrationResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="79" selection-start-line="225" selection-start-column="79" selection-end-line="225" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#1341#1342#0" expanded="true" />
+            <element signature="e#1375#1376#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/CameraCalibrator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <caret line="174" column="64" selection-start-line="174" selection-start-column="64" selection-end-line="174" selection-end-column="64" />
+          <folding>
+            <element signature="e#8778#8779#0" expanded="true" />
+            <element signature="e#8824#8825#0" expanded="true" />
+            <element signature="e#8870#8871#0" expanded="true" />
+            <element signature="e#8926#8927#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_headers.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8461537">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+          <folding>
+            <element signature="e#552#570#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_notification.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.730769">
+          <caret line="57" column="20" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="342" column="23" selection-start-line="342" selection-start-column="15" selection-end-line="342" selection-end-column="32" />
+          <folding>
+            <element signature="e#12083#12090#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/AR_Engine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="272" column="34" selection-start-line="272" selection-start-column="34" selection-end-line="272" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+            <element signature="e#885#886#0" expanded="true" />
+            <element signature="method#AR_Engine#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#solvePnP#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#projectPoints#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#DrawMultiColoredBox#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#DrawOneColoredBox#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#Get3Dfigure#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#Nothing#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#drawAxis#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#D3Axis#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#Triangle#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#TrianglePart#0;class#AR_Engine#0" expanded="false" />
+            <element signature="docComment;method#SquareBox#0;class#AR_Engine#0" expanded="false" />
+            <element signature="method#SquareBox#0;class#AR_Engine#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3546,19 +3629,39 @@
     <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/TestData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="246" column="34" selection-start-line="246" selection-start-column="13" selection-end-line="246" selection-end-column="49" />
+          <caret line="217" column="76" selection-start-line="217" selection-start-column="76" selection-end-line="217" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7534#7541#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/java/org/opencv/samples/tutorial1/Tutorial1Activity.java">
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/layout/tutorial1_surface_view.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_data_sync.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57168144">
-          <caret line="347" column="74" selection-start-line="347" selection-start-column="74" selection-end-line="347" selection-end-column="74" />
+        <state vertical-scroll-proportion="-1.4615384">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimpleAR/src/main/res/xml/pref_general.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7017544">
+          <caret line="25" column="19" selection-start-line="25" selection-start-column="18" selection-end-line="25" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2310#2354#0" expanded="true" />
           </folding>
         </state>
       </provider>

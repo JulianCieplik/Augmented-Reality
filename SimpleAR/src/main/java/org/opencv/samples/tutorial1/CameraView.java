@@ -7,15 +7,11 @@ import android.hardware.Camera.Size;
 import android.hardware.Camera.PictureCallback;
 import android.util.Log;
 
+
 import java.io.FileOutputStream;
 import java.util.List;
 
-
-
-
 import org.opencv.android.JavaCameraView;
-
-import java.util.List;
 
 /**
  * Created by Mikael on 2016-04-10.
@@ -52,7 +48,6 @@ public class CameraView extends JavaCameraView implements PictureCallback {
     }
 
     public void MdisconnectCamera(){
-        //mCamera.unlock();
         disconnectCamera();
     }
 
@@ -73,6 +68,7 @@ public class CameraView extends JavaCameraView implements PictureCallback {
         mCamera.takePicture(null, null, this);
         i++;
     }
+
 
 
     @Override

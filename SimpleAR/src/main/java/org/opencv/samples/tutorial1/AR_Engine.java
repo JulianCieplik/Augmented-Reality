@@ -37,11 +37,16 @@ public class AR_Engine {
     public static Mat tvec = new Mat();
     public static double scale = 0.5;
     public static double wscale = 1;
+    public static double w = 1.5;
+    public static double h = 1;
+    public static double height = 1; // heightFactor!
 
     private AR_Engine() {
     }
 
-    public static void solvePnP(MatOfPoint3f object,MatOfPoint2f ma1){
+    public static void solvePnP(MatOfPoint2f ma1){
+        MatOfPoint3f object = new MatOfPoint3f();
+        object.fromArray(new Point3[]{new Point3(0,0,0),new Point3(0,h,0),new Point3(w,h,0),new Point3(w,0,0)});
         Calib3d.solvePnP(object, ma1, mCameraMatrix, mDistortionCoefficients, rvec, tvec);
     }
 
@@ -54,10 +59,9 @@ public class AR_Engine {
     public static void DrawMultiColoredBox(Mat rgbaFrame){
         List<Point3> Face1 = new ArrayList<Point3>();
         Face1.add(new Point3(0,0,0));
-        Face1.add(new Point3(0,1*scale,0));
-        Face1.add(new Point3(1*scale,1*scale,0));
-        Face1.add(new Point3(1*scale,0,0));
-        //Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,0,0));
         MatOfPoint3f res= new MatOfPoint3f();
         res.fromList(Face1);
         MatOfPoint a = new MatOfPoint();
@@ -66,10 +70,9 @@ public class AR_Engine {
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 255), 8,0);
         Face1 = new ArrayList<Point3>();
         Face1.add(new Point3(0,0,0));
-        Face1.add(new Point3(0,1*scale,0));
-        Face1.add(new Point3(0,1*scale,1*scale));
-        Face1.add(new Point3(0,0,1*scale));
-        //Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
+        Face1.add(new Point3(0,0,1*scale*height));
         res= new MatOfPoint3f();
         res.fromList(Face1);
         a = new MatOfPoint();
@@ -77,10 +80,9 @@ public class AR_Engine {
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 255, 0), 8,0);
         Face1 = new ArrayList<Point3>();
         Face1.add(new Point3(0,0,0));
-        Face1.add(new Point3(1*scale,0,0));
-        Face1.add(new Point3(1*scale,0,1*scale));
-        Face1.add(new Point3(0,0,1*scale));
-        //Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(0,0,1*scale*height));
         res= new MatOfPoint3f();
         res.fromList(Face1);
         a = new MatOfPoint();
@@ -88,23 +90,20 @@ public class AR_Engine {
         a.fromArray(projectPoints(res).toArray());
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(128, 128, 128), 8,0);
         Face1 = new ArrayList<Point3>();
-        Face1.add(new Point3(1*scale,1*scale,0));
-        Face1.add(new Point3(1*scale,0,0));
-        Face1.add(new Point3(1*scale,0,1*scale));
-        Face1.add(new Point3(1*scale,1*scale,1*scale));
-        //Face1.add(new Point3(1,1,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
         res= new MatOfPoint3f();
         res.fromList(Face1);
         a = new MatOfPoint();
         a.fromArray(projectPoints(res).toArray());
-        Log.i("typeI","V:"+a.type());
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(255, 0, 0), 8,0);
         Face1 = new ArrayList<Point3>();
-        Face1.add(new Point3(0,1*scale,0));
-        Face1.add(new Point3(1*scale,1*scale,0));
-        Face1.add(new Point3(1*scale,1*scale,1*scale));
-        Face1.add(new Point3(0,1*scale,1*scale));
-        //Face1.add(new Point3(1,1,0));
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
         res= new MatOfPoint3f();
         res.fromList(Face1);
         a = new MatOfPoint();
@@ -112,13 +111,77 @@ public class AR_Engine {
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(255, 255, 0), 8,0);
     }
 
+    public static void DrawOneColoredBox(Mat rgbaFrame){
+        List<Point3> Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,0,0));
+        MatOfPoint3f res= new MatOfPoint3f();
+        res.fromList(Face1);
+        MatOfPoint a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Log.i("typeI","V:"+a.type());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
+        Face1.add(new Point3(0,0,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(0,0,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+    }
+
     public static MatOfPoint3f Get3Dfigure(int type){
         switch(type){
             case 1: return Triangle();
             case 2: return SquareBox();
-            case 3: return null;
-            default: return null;
+            case 3: return SquareBox();
+            case 4: return SphereRoid();
+            default: return Nothing();
         }
+    }
+    private static MatOfPoint3f Nothing(){
+        List<Point3> Xmodel = new ArrayList<Point3>();
+        Xmodel.add(new Point3(0,0,0));
+        Xmodel.add(new Point3(0,0.01,0));
+        MatOfPoint3f res= new MatOfPoint3f();
+        res.fromList(Xmodel);
+        return res;
     }
 
     public static void drawAxis(Mat rgbaFrame){
@@ -132,8 +195,8 @@ public class AR_Engine {
     public static MatOfPoint3f D3Axis(){
         List<Point3> Xmodel = new ArrayList<Point3>();
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(1,0,0));
-        Xmodel.add(new Point3(0,1,0));
+        Xmodel.add(new Point3(w,0,0));
+        Xmodel.add(new Point3(0,h,0));
         Xmodel.add(new Point3(0,0,1));
         MatOfPoint3f res= new MatOfPoint3f();
         res.fromList(Xmodel);
@@ -143,16 +206,16 @@ public class AR_Engine {
     public static MatOfPoint3f Triangle(){
         List<Point3> Xmodel = new ArrayList<Point3>();
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(0,1*wscale,0));
-        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale));
+        Xmodel.add(new Point3(0,h*wscale,0));
+        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(1*wscale,0,0));
-        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,0,0));
-        Xmodel.add(new Point3(1*wscale,1*wscale,0));
-        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,1*wscale,0));
-        Xmodel.add(new Point3(0,1*wscale,0));
+        Xmodel.add(new Point3(w*wscale,0,0));
+        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,0,0));
+        Xmodel.add(new Point3(w*wscale,h*wscale,0));
+        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,h*wscale,0));
+        Xmodel.add(new Point3(0,h*wscale,0));
         MatOfPoint3f res= new MatOfPoint3f();
         res.fromList(Xmodel);
         return res;
@@ -160,11 +223,11 @@ public class AR_Engine {
     public static MatOfPoint3f TrianglePart(){
         List<Point3> Xmodel = new ArrayList<Point3>();
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(0,1*wscale,0));
-        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,1*wscale,0));
-        Xmodel.add(new Point3(1*wscale,0,0));
-        Xmodel.add(new Point3(0.5,0.5*wscale,1*wscale));
+        Xmodel.add(new Point3(0,h*wscale,0));
+        Xmodel.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,h*wscale,0));
+        Xmodel.add(new Point3(w*wscale,0,0));
+        Xmodel.add(new Point3(0.5,0.5*wscale,1*wscale*height));
         Xmodel.add(new Point3(0,0,0));
         MatOfPoint3f res= new MatOfPoint3f();
         res.fromList(Xmodel);
@@ -178,28 +241,40 @@ public class AR_Engine {
     public static MatOfPoint3f SquareBox(){
         List<Point3> Xmodel = new ArrayList<Point3>();
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(0,1*wscale,0));
-        Xmodel.add(new Point3(1*wscale,1*wscale,0));
-        Xmodel.add(new Point3(1*wscale,0,0));
+        Xmodel.add(new Point3(0,h*wscale,0));
+        Xmodel.add(new Point3(w*wscale,h*wscale,0));
+        Xmodel.add(new Point3(w*wscale,0,0));
         Xmodel.add(new Point3(0,0,0));
-        Xmodel.add(new Point3(0,0,1*wscale));
-        Xmodel.add(new Point3(0,1*wscale,1*wscale));
-        Xmodel.add(new Point3(0,1*wscale,0));
-        Xmodel.add(new Point3(0,1*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,1*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,1*wscale,0));
-        Xmodel.add(new Point3(1*wscale,1*wscale,1*wscale));
-        Xmodel.add(new Point3(1*wscale,0,1*wscale));
-        Xmodel.add(new Point3(1*wscale,0,0));
-        Xmodel.add(new Point3(1*wscale,0,1*wscale));
-        Xmodel.add(new Point3(0,0,1*wscale));
+        Xmodel.add(new Point3(0,0,1*wscale*height));
+        Xmodel.add(new Point3(0,h*wscale,1*wscale*height));
+        Xmodel.add(new Point3(0,h*wscale,0));
+        Xmodel.add(new Point3(0,h*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,h*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,h*wscale,0));
+        Xmodel.add(new Point3(w*wscale,h*wscale,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,0,1*wscale*height));
+        Xmodel.add(new Point3(w*wscale,0,0));
+        Xmodel.add(new Point3(w*wscale,0,1*wscale*height));
+        Xmodel.add(new Point3(0,0,1*wscale*height));
         MatOfPoint3f res= new MatOfPoint3f();
         res.fromList(Xmodel);
         return res;
     }
 
     public static MatOfPoint3f SphereRoid(){
-        return null;
+        List<Point3> Xmodel = new ArrayList<Point3>();
+        Xmodel.add(new Point3(1,0.5,0.5));
+        Xmodel.add(new Point3(0.5,0.5,1));
+        Xmodel.add(new Point3(0,0.5,0.5));
+        Xmodel.add(new Point3(0.5,0.5,0));
+        Xmodel.add(new Point3(1,0.5,0.5));
+        Xmodel.add(new Point3(0.5,0,0.5));
+        Xmodel.add(new Point3(0,0.5,0.5));
+        Xmodel.add(new Point3(0.5,1,0.5));
+        Xmodel.add(new Point3(1,0.5,0.5));
+        MatOfPoint3f res= new MatOfPoint3f();
+        res.fromList(Xmodel);
+        return res;
     }
 
 }
