@@ -35,17 +35,33 @@
         />
     <EditTextPreference
         android:key="wscale"
-        android:defaultValue="1.0"
+        android:defaultValue="1.5"
         android:title="Width ScaleFactor"
         android:summary="The Width ScaleFactor"
         android:numeric="decimal"
         android:maxLength="4"
         />
     <EditTextPreference
-        android:key="solid"
+        android:key="height"
         android:defaultValue="1.0"
+        android:title="Height ScaleFactor"
+        android:summary="The Height ScaleFactor"
+        android:numeric="decimal"
+        android:maxLength="4"
+        />
+    <EditTextPreference
+        android:key="bscale"
+        android:defaultValue="0.5"
         android:title="Solid ScaleFactor"
         android:summary="The Uniform soild ScaleFactor"
+        android:numeric="decimal"
+        android:maxLength="4"
+        />
+    <EditTextPreference
+        android:key="wiscale"
+        android:defaultValue="1.0"
+        android:title="Wireframe ScaleFactor"
+        android:summary="The Uniform wireframe ScaleFactor"
         android:numeric="decimal"
         android:maxLength="4"
         />

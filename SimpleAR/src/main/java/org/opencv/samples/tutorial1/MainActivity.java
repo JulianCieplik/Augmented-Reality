@@ -2,13 +2,8 @@ package org.opencv.samples.tutorial1;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-
-import org.opencv.android.OpenCVLoader;
 
 public class MainActivity extends Activity {
 

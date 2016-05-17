@@ -42,8 +42,8 @@ public class CameraCalibrator {
 
     public CameraCalibrator(int width, int height,Activity a) {
         mPrefs=PreferenceManager.getDefaultSharedPreferences(a);
-        int i = Integer.valueOf(mPrefs.getString("d1","4"));
-        int j = Integer.valueOf(mPrefs.getString("d2","11"));
+        int i = Integer.valueOf(mPrefs.getString("pat_rows","4"));
+        int j = Integer.valueOf(mPrefs.getString("pat_cols","11"));
         int k = Integer.valueOf(mPrefs.getString("sync_frequency","1"));
         mPatternSize = new Size(i,j);
         patternType= k;
@@ -66,8 +66,8 @@ public class CameraCalibrator {
 
     public void ReloadSettings(Activity a){
         mPrefs=PreferenceManager.getDefaultSharedPreferences(a);
-        int i = Integer.valueOf(mPrefs.getString("d1","4"));
-        int j = Integer.valueOf(mPrefs.getString("d2","11"));
+        int i = Integer.valueOf(mPrefs.getString("pat_rows","4"));
+        int j = Integer.valueOf(mPrefs.getString("pat_cols","11"));
         int k = Integer.valueOf(mPrefs.getString("sync_frequency","1"));
         mPatternSize = new Size(i,j);
         patternType= k;
@@ -82,12 +82,15 @@ public class CameraCalibrator {
 
     public void ResChanged(int width,int height){
 
-    //    mImageSize =  new Size(width,height);
-    //    double[] d=new double[]{width/calw,1,width/calw,1,height/calh,height/calh,1,1,1};
-    //    Mat mScale= new Mat(3,3,CvType.CV_64FC1);
-    //    mScale.put(0,0,d);
-    //    AR_Engine.mCameraMatrix.copyTo(msCameraMatrix);
-    //    msCameraMatrix.mul(mScale);
+        mImageSize =  new Size(width,height);
+        double[] d=new double[]{width/calw,1,width/calw,1,height/calh,height/calh,1,1,1};
+        Mat mScale= new Mat(3,3,CvType.CV_64FC1);
+        mScale.put(0,0,d);
+        MatOfDouble msCameraMatrix=new MatOfDouble();
+        AR_Engine.mCameraMatrix.copyTo(msCameraMatrix);
+        msCameraMatrix.mul(mScale);
+        Log.i("Observance", "Orginal: " + AR_Engine.mCameraMatrix.dump());
+        Log.i("Observance", "Updated: " + msCameraMatrix.dump());
     }
 
     public void calibrate() {

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.app.Activity;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,15 +19,11 @@ import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.MatOfPoint3f;
+import org.opencv.core.MatOfPoint2f;;
 import org.opencv.core.Point;
-import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -36,8 +31,6 @@ import java.util.List;
 
 public class TestData extends Activity {
 
-    private static Size mPatternSize = new Size(2, 6);
-    private static int mCornersSize = (int)(mPatternSize.width * mPatternSize.height);
     private MatOfPoint2f mCorners = new MatOfPoint2f();
     static {
         if (!OpenCVLoader.initDebug()) {
@@ -71,27 +64,14 @@ public class TestData extends Activity {
         // so any opencv call here will lead to unresolved native errors.
     }
 
-
-    private boolean findPattern(Mat grayFrame,int i) {
-       switch (i){
-           case 1:  return Calib3d.findCirclesGrid(grayFrame, mPatternSize,
-                   mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING);
-           case 2: return Calib3d.findCirclesGrid(grayFrame, mPatternSize,
-                   mCorners,Calib3d.CALIB_CB_SYMMETRIC_GRID+Calib3d.CALIB_CB_CLUSTERING);
-           case 3: return Calib3d.findChessboardCorners(grayFrame,mPatternSize,mCorners,Calib3d.CALIB_CB_NORMALIZE_IMAGE+Calib3d.CALIB_CB_FAST_CHECK+Calib3d.CALIB_CB_ADAPTIVE_THRESH);
-
-           case 4:  return Calib3d.findCirclesGrid(grayFrame, mPatternSize,
-                   mCorners, Calib3d.CALIB_CB_ASYMMETRIC_GRID);
-       }
-    return false;
-    }
-
    /* File root = Environment.getExternalStorageDirectory();
     ImageView IV = (ImageView) findViewById(R.id."image view");
     Bitmap bMap = BitmapFactory.decodeFile(root+"/images/01.jpg");
     IV.setImageBitmap(bMap);*/
+   // mPatternSize = new Size(9, 6);
+   // mPatternSize= new Size(4,11);
 
-    public void Calibrations(CameraCalibrator cal){
+    public void Calibrations(CameraCalibrator cal, int width, int height){
         Resources res = getResources();
         SharedPreferences mPrefs= PreferenceManager.getDefaultSharedPreferences(this);
         // MakeCamera Image
@@ -124,40 +104,41 @@ public class TestData extends Activity {
             CalibrationResult.save(this, AR_Engine.mCameraMatrix, AR_Engine.mDistortionCoefficients,calwidth,calheight);
         } else {
             cal.setCalibrated();
-          //  cal.ResChanged(width,height);
+            cal.ResChanged(width,height);
             cal.getCameraMatrix().copyTo(AR_Engine.mCameraMatrix);
             cal.getDistortionCoefficients().copyTo(AR_Engine.mDistortionCoefficients);
         }
     }
 
     public void ImageDrawTest() {
+        //Imgproc.circle();
         Resources res = getResources();
         SharedPreferences mPrefs= PreferenceManager.getDefaultSharedPreferences(this);
         int i = Integer.valueOf(mPrefs.getString("Timg", "2"));
-        int x = Integer.valueOf(mPrefs.getString("d1", "2"));
-        int y = Integer.valueOf(mPrefs.getString("d2", "3"));
+        int x = Integer.valueOf(mPrefs.getString("pat_rows", "2"));
+        int y = Integer.valueOf(mPrefs.getString("pat_cols", "3"));
         int showHomog = Integer.valueOf(mPrefs.getString("zWork","1"));  // Display The Homography
-        int solid = Integer.valueOf(mPrefs.getString("Solid","1"));
+        AR_Engine.solid = Integer.valueOf(mPrefs.getString("Solid","1"));
         float homoScale = Float.valueOf(mPrefs.getString("homoScale","1.0"));
+        AR_Engine.height =  Float.valueOf(mPrefs.getString("wfh","1.0"));
+        AR_Engine.w =  Float.valueOf(mPrefs.getString("wscale","1.0"));
+        AR_Engine.h =  Float.valueOf(mPrefs.getString("height","1.0"));
+        AR_Engine.scale = Float.valueOf(mPrefs.getString("bscale","1.0"));
+        AR_Engine.wscale = Float.valueOf(mPrefs.getString("wiscale","1.0"));
         int detection = Integer.valueOf(mPrefs.getString("sync_frequency","1")); //Detection Method
-        //if (i>15) {
-           // mPatternSize = new Size(9, 6);
-        //}else{
-            // mPatternSize= new Size(4,11);
-        //}
-        mPatternSize=new Size(x,y);
+
         Bitmap bMap = getTestImage(i,res);  // Image To Display
         int height = bMap.getHeight();
         int width = bMap.getWidth();
         CameraCalibrator cal = new CameraCalibrator(width, height, this);
-        Calibrations(cal);
+        Calibrations(cal,width,height);
         Mat m = Mat.zeros(width, height, CvType.CV_8UC3);
         Mat gray = Mat.zeros(width, height, CvType.CV_8UC1);
         Utils.bitmapToMat(bMap, m);
         Imgproc.cvtColor(m, gray, Imgproc.COLOR_BGR2GRAY);
         cal.patternType=detection;
+        cal.ReloadSettings(this);
         cal.findPattern(gray);
-        //processFrame(gray, m); //displayes detected pattern
         //Image Is Turn by WarpProjective After findHomography
          i = Integer.valueOf(mPrefs.getString("Timg", "2"));
         Bitmap xMap =getTestImage(0,res);  // OverLay 2-D Image
@@ -167,12 +148,21 @@ public class TestData extends Activity {
 
         Mat over = Mat.zeros(widthx, heightx, CvType.CV_8UC3);
         Utils.bitmapToMat(xMap, over);
+
+
         if (cal.patternfound()) {
+
             //Now The Corners Of Figure is in mCorner
             Point[] points = mCorners.toArray();
             Point[] outerCorners = cal.getouterCorners();
+            MatOfPoint m1 = new MatOfPoint();
+            m1.fromArray(outerCorners);
+            List<MatOfPoint> contor = new ArrayList<>();
+            contor.add(m1);
+            Imgproc.drawContours(m, contor, 0, new Scalar(180, 180, 70),10);
             MatOfPoint2f ma1 = new MatOfPoint2f();
             ma1.fromArray(outerCorners);
+            AR_Engine.solvePnP(ma1);
             //2D points
             if (showHomog==1) {
                 List<Point> imagePoints = new ArrayList<Point>();
@@ -182,28 +172,28 @@ public class TestData extends Activity {
                 imagePoints.add(new Point(74*homoScale, 0));
                 MatOfPoint2f ma2 = new MatOfPoint2f();
                 ma2.fromList(imagePoints);
+                List<Point> imagePointsB = new ArrayList<Point>();
+                imagePointsB.add(new Point(0, 0));
+                imagePointsB.add(new Point(0, 100*homoScale));
+                imagePointsB.add(new Point(100*homoScale, 100*homoScale));
+                imagePointsB.add(new Point(100*homoScale, 0));
+                MatOfPoint2f maz = new MatOfPoint2f();
+                maz.fromList(imagePointsB);
                 Mat H = Calib3d.findHomography(ma2, ma1, Calib3d.RANSAC, 3);
                 Mat overRot = Mat.zeros(width, height, CvType.CV_8UC3);
                 Imgproc.warpPerspective(over, overRot, H, new Size(width, height));
                 Core.addWeighted(m, 0.8, overRot, 1, 0, m);
+                AR_Engine.HomographyCompletefigure(m,getRubicSides(res),maz);
             }
-            MatOfPoint m1 = new MatOfPoint();
-            m1.fromArray(outerCorners);
+
             MatOfPoint mx1 = new MatOfPoint();
             mx1.fromArray(points);
             Log.i("hej:", "m1:"+m1.dump());
-            List<MatOfPoint> contor = new ArrayList<>();
-            contor.add(m1);
-
-            // Draw Solid Overlay overRot.copyTo(m.colRange((int) points[0].x, (int) points[0].x + 74).rowRange((int) points[0].y, (int) points[0].y + 67));
-
-            Imgproc.drawContours(m, contor, 0, new Scalar(180, 180, 70),10);
 
             int eWork = i= Integer.valueOf(mPrefs.getString("eWork", "0"));
             if (eWork==1){
                 //Do 3D work!
-                Log.i("hej:", "Assign1");
-                AR_Engine.solvePnP(ma1);
+
                 AR_Engine.drawAxis(m);
                 if (Integer.valueOf(mPrefs.getString("figure","1"))==1) {
                     int show3Dwire = Integer.valueOf(mPrefs.getString("3Dframewire", "1"));  // Display The Homography
@@ -215,13 +205,11 @@ public class TestData extends Activity {
                     Log.i("hej:", "AtdrawingPhase" + respoints.dump());
                     p.fromList(respoints.toList());
                     a.add(0, p);
+                    AR_Engine.DrawDots(m,respoints.toArray());
                     Imgproc.drawContours(m, a, 0, new Scalar(200, 50, 50), 5);
                 }
-                if (solid==1) {
-                    AR_Engine.DrawOneColoredBox(m);
-                }else if (solid==2){
-                    AR_Engine.DrawMultiColoredBox(m);
-                }
+                AR_Engine.DrawSolid(m);
+
 
                 ;Log.i("hej:", "PolyDone ");
                 //String resultMessage = respoints.dump();
@@ -231,15 +219,43 @@ public class TestData extends Activity {
             Imgproc.putText(m, "Pattern Undetected", new Point(30, 80), Core.FONT_HERSHEY_SCRIPT_SIMPLEX, 2.2, new Scalar(200, 200, 0), 2);
             over.copyTo(m.colRange(80, 80 + 74).rowRange(100, 100 + 67));
         }
-        Bitmap bm = Bitmap.createBitmap(m.cols(), m.rows(), Bitmap.Config.ARGB_8888);
+       Bitmap bm = Bitmap.createBitmap(m.cols(), m.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(m, bm);
         // find the imageview and draw it!
         ImageView iv = (ImageView) findViewById(R.id.iView1);
         iv.setImageBitmap(bm);
     }
 
-    Bitmap getTestImage(int i,Resources res){
+    List<Mat> getRubicSides(Resources res){
+        ArrayList<Mat> Sides = new ArrayList<>();
+        Mat imag=new Mat();
+        Bitmap b = BitmapFactory.decodeResource(res, R.drawable.green);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+       imag=new Mat();
+        b = BitmapFactory.decodeResource(res, R.drawable.blue);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+         imag=new Mat();
+        b = BitmapFactory.decodeResource(res, R.drawable.orange);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+         imag=new Mat();
+         b = BitmapFactory.decodeResource(res, R.drawable.yellow);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+        imag=new Mat();
+        b = BitmapFactory.decodeResource(res, R.drawable.white);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+        imag=new Mat();
+        b = BitmapFactory.decodeResource(res, R.drawable.red);
+        Utils.bitmapToMat(b,imag);
+        Sides.add(imag);
+        return Sides;
+    }
 
+    Bitmap getTestImage(int i,Resources res){
         switch (i){
             case 0:return BitmapFactory.decodeResource(res, R.drawable.overlay);
             case 1:return BitmapFactory.decodeResource(res, R.drawable.i01);

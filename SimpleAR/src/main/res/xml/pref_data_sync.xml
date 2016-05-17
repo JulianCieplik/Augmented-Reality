@@ -4,7 +4,7 @@
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:key="d1"
+        android:key="pat_rows"
         android:defaultValue="4"
         android:title="@string/pref_title_rows"
         android:summary="The number of rows in the pattern"
@@ -12,7 +12,7 @@
         android:maxLength="2"
         />
     <EditTextPreference
-        android:key="d2"
+        android:key="pat_cols"
         android:defaultValue="11"
         android:title="@string/pref_title_columns"
         android:summary="The number of columns in the pattern"

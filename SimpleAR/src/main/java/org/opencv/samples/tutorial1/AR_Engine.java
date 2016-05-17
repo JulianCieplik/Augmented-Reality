@@ -1,6 +1,8 @@
 package org.opencv.samples.tutorial1;
 
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfPoint;
@@ -18,6 +20,7 @@ import java.util.WeakHashMap;
 import android.util.Log;
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -35,6 +38,7 @@ public class AR_Engine {
     public static MatOfDouble mDistortionCoefficients = new MatOfDouble();
     public static Mat rvec = new Mat();
     public static Mat tvec = new Mat();
+    public static int solid=0;
     public static double scale = 0.5;
     public static double wscale = 1;
     public static double w = 1.5;
@@ -48,6 +52,17 @@ public class AR_Engine {
         MatOfPoint3f object = new MatOfPoint3f();
         object.fromArray(new Point3[]{new Point3(0,0,0),new Point3(0,h,0),new Point3(w,h,0),new Point3(w,0,0)});
         Calib3d.solvePnP(object, ma1, mCameraMatrix, mDistortionCoefficients, rvec, tvec);
+    }
+
+    public static void DrawSolid(Mat m){
+        if (solid==1) {
+            DrawOneColoredBox(m);}
+        if (solid==2){
+           DrawMultiColoredBox(m);
+        }
+        if (solid==3){
+            OneColoredTriagle(m);
+        }
     }
 
     public static MatOfPoint2f projectPoints(MatOfPoint3f Cobject){
@@ -166,6 +181,109 @@ public class AR_Engine {
         Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
     }
 
+    public static void OneColoredTriagle(Mat rgbaFrame){
+        List<Point3> Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(0,h*wscale,0));
+        Face1.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Face1.add(new Point3(0,0,0));
+        MatOfPoint3f res= new MatOfPoint3f();
+        res.fromList(Face1);
+        MatOfPoint a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Log.i("typeI","V:"+a.type());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(w*wscale,0,0));
+        Face1.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Face1.add(new Point3(0,h*wscale,0));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(w*wscale,h*wscale,0));
+        Face1.add(new Point3(0.5*wscale,0.5*wscale,1*wscale*height));
+        Face1.add(new Point3(w*wscale,h*wscale,0));
+        Face1.add(new Point3(0,h*wscale,0));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        a = new MatOfPoint();
+        a.fromArray(projectPoints(res).toArray());
+        Imgproc.fillConvexPoly(rgbaFrame, a, new Scalar(0, 0, 0), 8,0);
+    }
+
+    public static void HomographyCompletefigure(Mat rgbaFrame,List<Mat> sides, MatOfPoint2f ma2) {
+        List<Point3> Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0, 0, 0));
+        Face1.add(new Point3(0, h * scale, 0));
+        Face1.add(new Point3(w * scale, h * scale, 0));
+        Face1.add(new Point3(w * scale, 0, 0));
+        MatOfPoint3f res = new MatOfPoint3f();
+        res.fromList(Face1);
+        Mat H = Calib3d.findHomography(ma2, projectPoints(res), Calib3d.RANSAC, 3);
+        Mat overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(0), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.addWeighted(rgbaFrame, 0.8, overRot, 0.8, 0, rgbaFrame);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0, 0, 0));
+        Face1.add(new Point3(0, h * scale, 0));
+        Face1.add(new Point3(0, h * scale, 1 * scale * height));
+        Face1.add(new Point3(0, 0, 1 * scale * height));
+        res = new MatOfPoint3f();
+        res.fromList(Face1);
+        H = Calib3d.findHomography(ma2, projectPoints(res), Calib3d.RANSAC, 3);
+        overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(1), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.addWeighted(rgbaFrame, 1, overRot, 0.8, 0, rgbaFrame);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(0,0,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        H = Calib3d.findHomography(ma2, projectPoints(res), Calib3d.RANSAC, 3);
+        overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(2), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.addWeighted(rgbaFrame, 1, overRot, 0.8, 0, rgbaFrame);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,0,0));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        H = Calib3d.findHomography(ma2, projectPoints(res), Calib3d.RANSAC, 3);
+        overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(3), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.subtract(rgbaFrame.clone(),overRot,rgbaFrame);
+        Core.addWeighted(rgbaFrame, 1, overRot, 0.8, 0, rgbaFrame);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,0));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        H = Calib3d.findHomography(ma2, projectPoints(res), 0, 3);
+        overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(4), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.addWeighted(rgbaFrame, 1, overRot, 0.8, 0, rgbaFrame);
+        Face1 = new ArrayList<Point3>();
+        Face1.add(new Point3(0,0,1*scale*height));
+        Face1.add(new Point3(w*scale,0,1*scale*height));
+        Face1.add(new Point3(w*scale,h*scale,1*scale*height));
+        Face1.add(new Point3(0,h*scale,1*scale*height));
+        res= new MatOfPoint3f();
+        res.fromList(Face1);
+        H = Calib3d.findHomography(ma2, projectPoints(res), 0, 3);
+        overRot = Mat.zeros(rgbaFrame.width(), rgbaFrame.height(), CvType.CV_8UC3);
+        Imgproc.warpPerspective(sides.get(5), overRot, H, new Size(rgbaFrame.width(), rgbaFrame.height()));
+        Core.addWeighted(rgbaFrame, 1, overRot, 0.8, 0, rgbaFrame);
+    }
+
     public static MatOfPoint3f Get3Dfigure(int type){
         switch(type){
             case 1: return Triangle();
@@ -189,6 +307,14 @@ public class AR_Engine {
         Imgproc.line(rgbaFrame,axises[0],axises[1],new Scalar(0,255,0),5);
         Imgproc.line(rgbaFrame,axises[0],axises[2],new Scalar(0,0,255),5);
         Imgproc.line(rgbaFrame,axises[0],axises[3],new Scalar(255,0,0),5);
+    }
+
+    public static void DrawDots(Mat rgbaFrame,Point[] dots){
+        int i=0;
+        while(i<dots.length){
+            Imgproc.circle(rgbaFrame,dots[i],1,new Scalar(100,200,100),2);
+            i++;
+        }
     }
 
     // WireFrames HardCoded (Static Method)

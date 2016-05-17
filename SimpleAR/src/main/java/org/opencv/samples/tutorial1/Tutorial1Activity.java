@@ -60,6 +60,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private List<Size> mResolutionList;
     private MenuItem[] mResolutionMenuItems;
     private SubMenu mResolutionMenu;
+    private boolean started = false;
 
 
     static {
@@ -160,6 +161,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             String resultMessage = "ImageTakenDone!";
             (makeText(null, resultMessage, Toast.LENGTH_LONG)).show();
         }
+        started=true;
         return false;
     }
 
@@ -228,7 +230,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat imageFrame = inputFrame.rgba();
-        if (mCalibrator.isCalibrated()) {
+        if (mCalibrator.isCalibrated() && started) {
             mOnCameraFrameRender.render(imageFrame,inputFrame.gray());
         } else {
             Imgproc.putText(imageFrame, "UnCalibrated", new Point(50, 50),
@@ -284,6 +286,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         private CameraCalibrator mCalibrator;
         private MatOfPoint3f Cobject;
         private MatOfPoint2f ma2 = new MatOfPoint2f();
+        private MatOfPoint2f maz = new MatOfPoint2f();
         private Mat over;
         private boolean showHomog;
         public int show3Dwire= 1;
@@ -303,6 +306,12 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             wireframe=Integer.valueOf(mPrefs.getString("figure","1"))==1;
             solid = Integer.valueOf(mPrefs.getString("Solid","1"));
             float homoScale = Float.valueOf(mPrefs.getString("homoScale","1.0")); //Scale of Homography
+            AR_Engine.solid = Integer.valueOf(mPrefs.getString("Solid","1"));
+            AR_Engine.height =  Float.valueOf(mPrefs.getString("wfh","1.0"));
+            AR_Engine.w =  Float.valueOf(mPrefs.getString("wscale","1.0"));
+            AR_Engine.h =  Float.valueOf(mPrefs.getString("height","1.0"));
+            AR_Engine.scale = Float.valueOf(mPrefs.getString("bscale","1.0"));
+            AR_Engine.wscale = Float.valueOf(mPrefs.getString("wiscale","1.0"));
             //2D points (1/2 scaled)
             List<Point> imagePoints = new ArrayList<Point>();
             imagePoints.add(new Point(0,0));
@@ -310,6 +319,13 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             imagePoints.add(new Point(74*homoScale, 67*homoScale));
             imagePoints.add(new Point(74*homoScale, 0));
             ma2.fromList(imagePoints);
+            List<Point> imagePointsB = new ArrayList<Point>();
+            imagePointsB.add(new Point(0, 0));
+            imagePointsB.add(new Point(0, 100*homoScale));
+            imagePointsB.add(new Point(100*homoScale, 100*homoScale));
+            imagePointsB.add(new Point(100*homoScale, 0));
+            MatOfPoint2f maz = new MatOfPoint2f();
+            maz.fromList(imagePointsB);
             Cobject=AR_Engine.Get3Dfigure(show3Dwire);
             Log.i("hej:", "ModelsDone");
             over = Mat.zeros(74, 67, CvType.CV_8UC3);
@@ -330,6 +346,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                 m1.fromArray(outerCorners);
                 List<MatOfPoint> contor = new ArrayList<>();
                 contor.add(m1);
+                Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
                 int width = rgbaFrame.width();
                 int height = rgbaFrame.height();
                 if (showHomog) {
@@ -338,8 +355,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                     Imgproc.warpPerspective(over, overRot, H, new org.opencv.core.Size(width, height));
                     Core.addWeighted(rgbaFrame, 0.8, overRot, 1, 0, rgbaFrame);
                 }
-                Imgproc.drawContours(rgbaFrame, contor, 0, new Scalar(100, 100, 50));
+
                 AR_Engine.solvePnP(ma1);
+                AR_Engine.drawAxis(rgbaFrame);
                 if (wireframe) {
                     MatOfPoint2f respoints = AR_Engine.projectPoints(Cobject);
                     MatOfPoint p = new MatOfPoint();
@@ -349,12 +367,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                     a.add(0, p);
                     Imgproc.drawContours(rgbaFrame, a, 0, new Scalar(200, 50, 50), 10);
                 }
-                if (solid==1) {
-                    AR_Engine.DrawOneColoredBox(rgbaFrame);
-                }else if (solid==2){
-                    AR_Engine.DrawMultiColoredBox(rgbaFrame);
-                }
-                AR_Engine.drawAxis(rgbaFrame);
+                AR_Engine.DrawSolid(rgbaFrame);
+
             }
 
             return rgbaFrame;
